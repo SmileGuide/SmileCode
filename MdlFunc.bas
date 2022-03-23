@@ -144,35 +144,39 @@ End Function
 Public Function NumToDay(TheNumber As Integer)
 If TheNumber = 1 Then
 NumToDay = "星期一"
-If TheNumber = 2 Then
+ElseIf TheNumber = 2 Then
 NumToDay = "星期二"
-If TheNumber = 3 Then
+ElseIf TheNumber = 3 Then
 NumToDay = "星期三"
-If TheNumber = 4 Then
+ElseIf TheNumber = 4 Then
 NumToDay = "星期四"
-If TheNumber = 5 Then
+ElseIf TheNumber = 5 Then
 NumToDay = "星期五"
-If TheNumber = 6 Then
+ElseIf TheNumber = 6 Then
 NumToDay = "星期六"
-If TheNumber = 7 Then
+ElseIf TheNumber = 7 Then
 NumToDay = "星期日"
+Else
+numday = "ERROR"
 End If
 End Function
 
 Public Function DayToNum(TheDay As String)
 If TheDay = "星期一" Then
 DayToNum = 1
-If TheDay = "星期二" Then
+ElseIf TheDay = "星期二" Then
 DayToNum = 2
-If TheDay = "星期三" Then
+ElseIf TheDay = "星期三" Then
 DayToNum = 3
-If TheDay = "星期四" Then
+ElseIf TheDay = "星期四" Then
 DayToNum = 4
-If TheDay = "星期五" Then
+ElseIf TheDay = "星期五" Then
 DayToNum = 5
-If TheDay = "星期六" Then
+ElseIf TheDay = "星期六" Then
 DayToNum = 6
-If TheDay = "星期日" Then
+ElseIf TheDay = "星期日" Then
 DayToNum = 7
+Else
+DayToNum = 0
 End If
 End Function

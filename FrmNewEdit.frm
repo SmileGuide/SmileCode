@@ -17,12 +17,11 @@ Begin VB.Form FrmNewEdit
    ShowInTaskbar   =   0   'False
    StartUpPosition =   1  '所有者中心
    Begin VB.ComboBox CblDay 
-      BackColor       =   &H00DFFFB0&
+      BackColor       =   &H00FAF9D6&
       Height          =   228
       ItemData        =   "FrmNewEdit.frx":1084A
       Left            =   4380
       List            =   "FrmNewEdit.frx":10863
-      Locked          =   -1  'True
       TabIndex        =   17
       Text            =   "星期一"
       Top             =   60
@@ -298,7 +297,7 @@ Begin VB.Form FrmNewEdit
       End
       Begin VB.Label LblSign 
          BackStyle       =   0  'Transparent
-         Caption         =   "Smile TimeTabe"
+         Caption         =   "Smile TimeTable"
          BeginProperty Font 
             Name            =   "Blackadder ITC"
             Size            =   12
@@ -368,14 +367,81 @@ Dim LSel As Integer
 
 Private Sub CblDay_Change()
 NDay = DayToNum(CblDay.Text)
+If NDay = 0 Then Exit Sub
+On Error Resume Next
 Open App.Path & "\SmTab\" & StName & ".smtab" & NDay For Input As #1
 Dim j, CTM, CL, k
+LstTm.Clear
+LstL.Clear
+LstO.Clear
 For j = 1 To FileLen(App.Path & "\SmTab\" & StName & ".smtab" & NDay)
 Input #1, CTM, CL
 LstTm.AddItem CTM
 LstL.AddItem CL
 Next j
 Close #1
+For k = 0 To LstTm.ListCount - 1
+LstO.AddItem k + 1, k
+Next
+If LstTm.List(0) = "" Then LstO.Clear
+Dim kl, kll
+kll = LstO.ListCount - 1
+For kl = 0 To kll
+
+If LstTm.List(kl) = "" Then klli = kl: GoTo 99
+Next
+LstO.Clear
+For k = 0 To LstTm.ListCount - 1
+LstO.AddItem k + 1, k
+Next
+Exit Sub
+99 kll = LstTm.ListCount - 1
+For k = klli To kll
+LstTm.RemoveItem (klli)
+LstL.RemoveItem (klli)
+Next
+LstO.Clear
+For k = 0 To LstTm.ListCount - 1
+LstO.AddItem k + 1, k
+End Sub
+
+Private Sub CblDay_Click()
+NDay = DayToNum(CblDay.Text)
+If NDay = 0 Then Msg "请输入正确的星期数或选择下拉列表中的预设值", &H8080FF, "1500": Exit Sub
+
+Open App.Path & "\SmTab\" & StName & ".smtab" & NDay For Input As #1
+Dim j, CTM, CL, k
+LstTm.Clear
+LstL.Clear
+LstO.Clear
+For j = 1 To 100
+Input #1, CTM, CL
+LstTm.AddItem CTM
+LstL.AddItem CL
+If EOF(1) = True Then Exit For
+Next j
+Close #1
+For k = 0 To LstTm.ListCount - 1
+LstO.AddItem k + 1, k
+Next
+If LstTm.List(0) = "" Then LstO.Clear
+Dim kl, kll, klli
+kll = LstO.ListCount - 1
+For kl = 0 To 100
+On Error Resume Next
+If LstTm.List(kl) = "" Then klli = kl: GoTo 99
+Next
+LstO.Clear
+For k = 0 To LstTm.ListCount - 1
+LstO.AddItem k + 1, k
+Next
+Exit Sub
+99 kll = LstTm.ListCount - 1
+For k = klli To kll
+LstTm.RemoveItem (klli)
+LstL.RemoveItem (klli)
+Next
+LstO.Clear
 For k = 0 To LstTm.ListCount - 1
 LstO.AddItem k + 1, k
 Next
@@ -387,6 +453,8 @@ End Sub
 
 Private Sub CmdOK_Click()
 Saved = True
+On Error Resume Next
+Kill App.Path & "\SmTab\" & StName & ".smtab" & NDay
 Open App.Path & "\SmTab\" & StName & ".smtab" & NDay For Output As #1
 Dim j
 For j = 0 To LstTm.ListCount - 1
@@ -412,13 +480,13 @@ End Sub
 
 Private Sub CmdTAdd_Click()
 If Not IsNumeric(CboHC.Text) Then
-MsgBox "请输入数字", vbExclamation, "微笑课程表"
+Msg "请输入数字", &H8080FF, 500
 CboHC.Text = ""
 CboHC.SetFocus
 Exit Sub
 End If
 If Not IsNumeric(CboMC.Text) Then
-MsgBox "请输入数字", vbExclamation, "微笑课程表"
+Msg "请输入数字", &H8080FF, 500
 CboMC.Text = ""
 CboMC.SetFocus
 Exit Sub
@@ -428,36 +496,27 @@ CboMC.Text = Format(CboMC.Text, "00")
 Dim a, B
 For a = 0 To LstTm.ListCount - 1
 If CboHC.Text & ":" & CboMC.Text = LstTm.List(a) Then
-    MsgBox "时间重复，不能添加", vbExclamation, "微笑课程表"
+    Msg "时间重复，不能添加", &H8080FF, 500
     Exit Sub
 End If
 Next
 For B = 0 To LstTm.ListCount - 1
 If CboHC.Text & ":" & CboMC.Text = LstTm.List(a) Then
-    MsgBox "时间重复，不能添加", vbExclamation, "微笑课程表"
+    Msg "时间重复，不能添加", &H8080FF, 500
     Exit Sub
 End If
 Next
 Dim i
+TMSel = -1
 For i = 0 To LstTm.ListCount - 1
 If LstTm.Selected(i) = True Then TMSel = i
 Next
-On Error GoTo 99
 LstTm.AddItem CboHC.Text & ":" & CboMC.Text, TMSel + 1
 LstL.AddItem CboLCha.Text, TMSel + 1
-Dim k, r
-For r = 0 To LstO.ListCount - 1
-LstO.RemoveItem r
-Next
-For k = 0 To LstTm.ListCount - 1
-LstO.AddItem k + 1, k
-Next
-Exit Sub
-99 LstTm.AddItem CboHC.Text & ":" & CboMC.Text
-LstL.AddItem CboLCha.Text
-
-For r = 0 To LstO.ListCount - 1
-LstO.RemoveItem r
+Dim k, r, l
+l = LstO.ListCount - 1
+For r = 0 To l
+LstO.RemoveItem 0
 Next
 For k = 0 To LstTm.ListCount - 1
 LstO.AddItem k + 1, k
@@ -482,6 +541,7 @@ End Sub
 
 Private Sub Form_Load()
 Dim i, j, k
+StName = 1
 TxtName.Text = StName
 For i = 1 To 24
     CboHC.AddItem Format(i, "00")
@@ -491,22 +551,23 @@ i = Format(j, "00")
     CboMC.AddItem Format(j, "00")
 Next
 '''''''
-Dim r
-For r = 0 To LstO.ListCount - 1
-LstO.RemoveItem r
+Dim r, l
+l = LstO.ListCount - 1
+For r = 0 To l
+LstO.RemoveItem 0
 Next
 For k = 0 To LstTm.ListCount - 1
 LstO.AddItem k + 1, k
 Next
 '''''''''''
 NDay = 1
-On Error Resume Next
+
 Open App.Path & "\SmTab\" & StName & ".smtab" & NDay For Input As #1
 
 '''''''
 Dim p, CTM, CL
 For p = 1 To 100
-If EOF(1) = True Then Exit For
+If EOF(1) = True Then Close #1: Exit For
 Input #1, CTM, CL
 LstTm.AddItem CTM
 LstL.AddItem CL
