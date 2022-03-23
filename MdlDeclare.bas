@@ -10,6 +10,7 @@ Public StName As String
 Public NDay As Integer
 Public Saved As Boolean
 Public SelL As Integer
+
 Public Declare Function ReleaseCapture Lib "user32" () As Long
 Public Declare Function SendMessage Lib "user32" Alias "SendMessageA" (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Long) As Long
 Public Const WM_NCLBUTTONDOWN = &HA1
@@ -21,7 +22,7 @@ Public Const WS_EX_LAYERED = &H80000
 Public Const GWL_EXSTYLE = (-20)
 Public Const LWA_ALPHA = &H2
 Public Const LWA_COLORKEY = &H1
-
+Public Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
 Public Declare Function SetWindowPos Lib "user32" (ByVal hwnd As Long, ByVal hWndInsertAfter As Long, ByVal X As Long, ByVal Y As Long, ByVal cx As Long, ByVal cy As Long, ByVal wFlags As Long) As Long
 Public Const HWND_TOPMOST& = -1
 Public Const HWND_NOTOPMOST = -2

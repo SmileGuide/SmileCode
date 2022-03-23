@@ -366,6 +366,22 @@ Dim TMSel As Integer
 Dim LSel As Integer
 
 Private Sub CblDay_Change()
+If Not Saved Then
+Dim Cls
+Cls = MsgBox("是否保存更改？", vbOKCancel, "微笑课程表")
+If Cls = vbOK Then
+NumberTbl LstTm, LstL
+Open App.Path & "\SmTab\" & StName & ".smtab" & NDay For Output As #1
+Dim jm
+For jm = 0 To LstTm.ListCount - 1
+Write #1, LstTm.List(jm), LstL.List(jm)
+Next jm
+Close #1
+Msg "已保存" & NumToDay(NDay) & "的课程", &HFDEEBF, 1000
+Save = True
+End If
+
+End If
 NDay = DayToNum(CblDay.Text)
 If NDay = 0 Then Exit Sub
 On Error Resume Next
@@ -403,9 +419,26 @@ Next
 LstO.Clear
 For k = 0 To LstTm.ListCount - 1
 LstO.AddItem k + 1, k
+Next
 End Sub
 
 Private Sub CblDay_Click()
+If Not Saved Then
+Dim Cls
+Cls = MsgBox("是否保存更改？", vbOKCancel, "微笑课程表")
+If Cls = vbOK Then
+NumberTbl LstTm, LstL
+Open App.Path & "\SmTab\" & StName & ".smtab" & NDay For Output As #1
+Dim jm
+For jm = 0 To LstTm.ListCount - 1
+Write #1, LstTm.List(jm), LstL.List(jm)
+Next jm
+Close #1
+Msg "已保存" & NumToDay(NDay) & "的课程", &HFDEEBF, 1000
+Save = True
+End If
+
+End If
 NDay = DayToNum(CblDay.Text)
 If NDay = 0 Then Msg "请输入正确的星期数或选择下拉列表中的预设值", &H8080FF, "1500": Exit Sub
 
@@ -453,8 +486,7 @@ End Sub
 
 Private Sub CmdOK_Click()
 Saved = True
-On Error Resume Next
-Kill App.Path & "\SmTab\" & StName & ".smtab" & NDay
+NumberTbl LstTm, LstL
 Open App.Path & "\SmTab\" & StName & ".smtab" & NDay For Output As #1
 Dim j
 For j = 0 To LstTm.ListCount - 1

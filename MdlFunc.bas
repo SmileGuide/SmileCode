@@ -56,6 +56,7 @@ FrmMsg.Tmr.Interval = ShowTime
 FrmMsg.Show
 End Function
 
+
 Public Function EnMiddle(Window As Form)
 Window.Move (Screen.Width - Window.Width) / 2, (Screen.Height - Window.Height) / 2
 End Function
@@ -180,3 +181,5 @@ Else
 DayToNum = 0
 End If
 End Function
+
+
