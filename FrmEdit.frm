@@ -1,20 +1,19 @@
 VERSION 5.00
 Begin VB.Form FrmEdit 
    BackColor       =   &H00C0FFFF&
-   BorderStyle     =   4  'Fixed ToolWindow
+   BorderStyle     =   1  'Fixed Single
    Caption         =   "     我的课程表 - 微笑课程表 [编辑]"
    ClientHeight    =   3600
-   ClientLeft      =   7880
-   ClientTop       =   9440
-   ClientWidth     =   5528
+   ClientLeft      =   7878
+   ClientTop       =   9438
+   ClientWidth     =   5532
    Icon            =   "FrmEdit.frx":0000
    KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
    ScaleHeight     =   3600
-   ScaleWidth      =   5528
-   ShowInTaskbar   =   0   'False
+   ScaleWidth      =   5532
    StartUpPosition =   1  '所有者中心
    Begin VB.CommandButton CmdDay 
       BackColor       =   &H00A5E9FC&
@@ -88,8 +87,8 @@ Begin VB.Form FrmEdit
          BackColor       =   &H0080FFFF&
          Height          =   2404
          Left            =   120
-         ScaleHeight     =   2388
-         ScaleWidth      =   648
+         ScaleHeight     =   2382
+         ScaleWidth      =   642
          TabIndex        =   16
          Top             =   180
          Width           =   664
@@ -105,7 +104,7 @@ Begin VB.Form FrmEdit
                Strikethrough   =   0   'False
             EndProperty
             ForeColor       =   &H00FF0000&
-            Height          =   1808
+            Height          =   1704
             ItemData        =   "FrmEdit.frx":1084A
             Left            =   60
             List            =   "FrmEdit.frx":1084C
@@ -119,8 +118,8 @@ Begin VB.Form FrmEdit
          BackColor       =   &H0080FFFF&
          Height          =   2404
          Left            =   3240
-         ScaleHeight     =   2388
-         ScaleWidth      =   1788
+         ScaleHeight     =   2382
+         ScaleWidth      =   1782
          TabIndex        =   4
          Top             =   180
          Width           =   1804
@@ -224,7 +223,7 @@ Begin VB.Form FrmEdit
                Strikethrough   =   0   'False
             EndProperty
             ForeColor       =   &H00FF0000&
-            Height          =   1808
+            Height          =   1704
             ItemData        =   "FrmEdit.frx":1084E
             Left            =   60
             List            =   "FrmEdit.frx":10850
@@ -238,8 +237,8 @@ Begin VB.Form FrmEdit
          BackColor       =   &H0080FFFF&
          Height          =   2404
          Left            =   840
-         ScaleHeight     =   2388
-         ScaleWidth      =   2328
+         ScaleHeight     =   2382
+         ScaleWidth      =   2322
          TabIndex        =   2
          Top             =   180
          Width           =   2344
@@ -351,7 +350,7 @@ Begin VB.Form FrmEdit
                Strikethrough   =   0   'False
             EndProperty
             ForeColor       =   &H00FF0000&
-            Height          =   1808
+            Height          =   1704
             ItemData        =   "FrmEdit.frx":10852
             Left            =   60
             List            =   "FrmEdit.frx":10854

@@ -1,20 +1,19 @@
 VERSION 5.00
 Begin VB.Form FrmNewEdit 
    BackColor       =   &H00C0FFFF&
-   BorderStyle     =   4  'Fixed ToolWindow
+   BorderStyle     =   1  'Fixed Single
    Caption         =   "     我的课程表 - 微笑课程表 [编辑]"
-   ClientHeight    =   4656
+   ClientHeight    =   4182
    ClientLeft      =   7878
    ClientTop       =   9438
-   ClientWidth     =   5442
+   ClientWidth     =   5382
    Icon            =   "FrmNewEdit.frx":0000
    KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   4656
-   ScaleWidth      =   5442
-   ShowInTaskbar   =   0   'False
+   ScaleHeight     =   4182
+   ScaleWidth      =   5382
    StartUpPosition =   1  '所有者中心
    Begin VB.ComboBox CblDay 
       BackColor       =   &H00FAF9D6&
@@ -50,17 +49,17 @@ Begin VB.Form FrmNewEdit
    End
    Begin VB.Frame FrmTab 
       BackColor       =   &H00C0FFFF&
-      Height          =   4206
+      Height          =   3786
       Left            =   60
       TabIndex        =   0
-      Top             =   240
+      Top             =   300
       Width           =   5224
-      Begin VB.CommandButton CmdReturn 
-         BackColor       =   &H00FFFFFF&
-         Caption         =   "还原至保存前"
+      Begin VB.CommandButton CmdCode 
+         BackColor       =   &H00C0E0FF&
+         Caption         =   "高级编辑..."
          BeginProperty Font 
             Name            =   "等线"
-            Size            =   10.5
+            Size            =   12
             Charset         =   134
             Weight          =   400
             Underline       =   0   'False
@@ -68,19 +67,39 @@ Begin VB.Form FrmNewEdit
             Strikethrough   =   0   'False
          EndProperty
          Height          =   306
-         Left            =   3660
+         Left            =   120
+         Style           =   1  'Graphical
+         TabIndex        =   20
+         ToolTipText     =   "小工具"
+         Top             =   3300
+         Width           =   2376
+      End
+      Begin VB.CommandButton CmdReturn 
+         BackColor       =   &H00FED8E7&
+         Caption         =   "还原"
+         BeginProperty Font 
+            Name            =   "等线"
+            Size            =   12
+            Charset         =   134
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   306
+         Left            =   2580
          Style           =   1  'Graphical
          TabIndex        =   19
          ToolTipText     =   "小工具"
-         Top             =   3660
-         Width           =   1356
+         Top             =   3300
+         Width           =   1176
       End
       Begin VB.CommandButton CmdOK 
          BackColor       =   &H00FDEEBF&
-         Caption         =   "保存该天课程"
+         Caption         =   "保存"
          BeginProperty Font 
             Name            =   "等线"
-            Size            =   10.5
+            Size            =   12
             Charset         =   134
             Weight          =   400
             Underline       =   0   'False
@@ -88,19 +107,19 @@ Begin VB.Form FrmNewEdit
             Strikethrough   =   0   'False
          EndProperty
          Height          =   306
-         Left            =   3660
+         Left            =   3840
          Style           =   1  'Graphical
          TabIndex        =   18
          ToolTipText     =   "小工具"
          Top             =   3300
-         Width           =   1356
+         Width           =   1176
       End
       Begin VB.CommandButton CmdO 
          BackColor       =   &H00C0FFC0&
          Caption         =   "按时间排序"
          BeginProperty Font 
             Name            =   "华文仿宋"
-            Size            =   9
+            Size            =   10.5
             Charset         =   134
             Weight          =   400
             Underline       =   0   'False
@@ -120,7 +139,7 @@ Begin VB.Form FrmNewEdit
          Caption         =   "删除"
          BeginProperty Font 
             Name            =   "华文仿宋"
-            Size            =   9
+            Size            =   10.5
             Charset         =   134
             Weight          =   400
             Underline       =   0   'False
@@ -140,7 +159,7 @@ Begin VB.Form FrmNewEdit
          Caption         =   "添加"
          BeginProperty Font 
             Name            =   "华文仿宋"
-            Size            =   9
+            Size            =   10.5
             Charset         =   134
             Weight          =   400
             Underline       =   0   'False
@@ -191,10 +210,10 @@ Begin VB.Form FrmNewEdit
          Height          =   2586
          Left            =   3240
          ScaleHeight     =   2562
-         ScaleWidth      =   1782
+         ScaleWidth      =   1842
          TabIndex        =   3
          Top             =   600
-         Width           =   1804
+         Width           =   1866
          Begin VB.ComboBox CboLCha 
             BackColor       =   &H00C0FFFF&
             Height          =   228
@@ -481,10 +500,6 @@ LstO.Clear
 For k = 0 To LstTm.ListCount - 1
 LstO.AddItem k + 1, k
 Next
-End Sub
-
-Private Sub CboLCha_Change()
-
 End Sub
 
 Private Sub CmdO_Click()
