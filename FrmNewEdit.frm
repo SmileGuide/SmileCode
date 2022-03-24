@@ -50,13 +50,13 @@ Begin VB.Form FrmNewEdit
    End
    Begin VB.Frame FrmTab 
       BackColor       =   &H00C0FFFF&
-      Height          =   3726
+      Height          =   4206
       Left            =   60
       TabIndex        =   0
       Top             =   240
       Width           =   5224
       Begin VB.CommandButton CmdReturn 
-         BackColor       =   &H00FDEEBF&
+         BackColor       =   &H00FFFFFF&
          Caption         =   "还原至保存前"
          BeginProperty Font 
             Name            =   "等线"
@@ -68,12 +68,12 @@ Begin VB.Form FrmNewEdit
             Strikethrough   =   0   'False
          EndProperty
          Height          =   306
-         Left            =   2160
+         Left            =   3660
          Style           =   1  'Graphical
          TabIndex        =   19
          ToolTipText     =   "小工具"
-         Top             =   3360
-         Width           =   1416
+         Top             =   3660
+         Width           =   1356
       End
       Begin VB.CommandButton CmdOK 
          BackColor       =   &H00FDEEBF&
@@ -88,11 +88,11 @@ Begin VB.Form FrmNewEdit
             Strikethrough   =   0   'False
          EndProperty
          Height          =   306
-         Left            =   3720
+         Left            =   3660
          Style           =   1  'Graphical
          TabIndex        =   18
          ToolTipText     =   "小工具"
-         Top             =   3360
+         Top             =   3300
          Width           =   1356
       End
       Begin VB.CommandButton CmdO 
@@ -221,7 +221,7 @@ Begin VB.Form FrmNewEdit
             Height          =   2184
             ItemData        =   "FrmNewEdit.frx":108FC
             Left            =   60
-            List            =   "FrmNewEdit.frx":1090F
+            List            =   "FrmNewEdit.frx":108FE
             TabIndex        =   4
             TabStop         =   0   'False
             Top             =   300
@@ -268,9 +268,9 @@ Begin VB.Form FrmNewEdit
             EndProperty
             ForeColor       =   &H00FF0000&
             Height          =   2184
-            ItemData        =   "FrmNewEdit.frx":10922
+            ItemData        =   "FrmNewEdit.frx":10900
             Left            =   60
-            List            =   "FrmNewEdit.frx":10935
+            List            =   "FrmNewEdit.frx":10902
             TabIndex        =   2
             TabStop         =   0   'False
             Top             =   300
@@ -317,7 +317,7 @@ Begin VB.Form FrmNewEdit
       Begin VB.Image ImgLogo 
          Height          =   384
          Left            =   240
-         Picture         =   "FrmNewEdit.frx":10948
+         Picture         =   "FrmNewEdit.frx":10904
          Top             =   180
          Width           =   384
       End
@@ -390,10 +390,12 @@ Dim j, CTM, CL, k
 LstTm.Clear
 LstL.Clear
 LstO.Clear
-For j = 1 To FileLen(App.Path & "\SmTab\" & StName & ".smtab" & NDay)
+For j = 1 To 100
+If EOF(1) = True Then Exit For
 Input #1, CTM, CL
 LstTm.AddItem CTM
 LstL.AddItem CL
+
 Next j
 Close #1
 For k = 0 To LstTm.ListCount - 1
@@ -448,10 +450,11 @@ LstTm.Clear
 LstL.Clear
 LstO.Clear
 For j = 1 To 100
+If EOF(1) = True Then Exit For
 Input #1, CTM, CL
 LstTm.AddItem CTM
 LstL.AddItem CL
-If EOF(1) = True Then Exit For
+
 Next j
 Close #1
 For k = 0 To LstTm.ListCount - 1
@@ -480,7 +483,12 @@ LstO.AddItem k + 1, k
 Next
 End Sub
 
+Private Sub CboLCha_Change()
+
+End Sub
+
 Private Sub CmdO_Click()
+Saved = False
 NumberTbl LstTm, LstL
 End Sub
 
@@ -497,13 +505,13 @@ Msg "已保存" & NumToDay(NDay) & "的课程", &HFDEEBF, 1000
 End Sub
 
 Private Sub CmdReturn_Click()
-
-Dim i, p, CTM, CL
-For i = 0 To LstTm.ListCount
-LstTm.RemoveItem i
-LstL.RemoveItem i
-Next
-For p = 1 To FileLen(App.Path & "\SmTab\" & StName & ".smtab" & NDay)
+Saved = True
+Dim p, CTM, CL
+LstTm.Clear
+LstL.Clear
+LstO.Clear
+For p = 1 To 100
+If EOF(i) Then Exit For
 Input #1, CTM, CL
 LstTm.AddItem CTM
 LstL.AddItem CL
@@ -523,6 +531,11 @@ CboMC.Text = ""
 CboMC.SetFocus
 Exit Sub
 End If
+If CboLCha.Text = "输入课程" Or "" Then
+Msg "请输入课程", &H8080FF, 500
+exitsub
+End If
+Saved = False
 CboHC.Text = Format(CboHC.Text, "00")
 CboMC.Text = Format(CboMC.Text, "00")
 Dim a, B
@@ -559,6 +572,7 @@ End Sub
 
 
 Private Sub CmdTDel_Click()
+Saved = False
 LstTm.RemoveItem SelL
 LstL.RemoveItem SelL
 Dim k, r
@@ -572,6 +586,7 @@ Next
 End Sub
 
 Private Sub Form_Load()
+Saved = True
 Dim i, j, k
 StName = 1
 TxtName.Text = StName
@@ -584,13 +599,7 @@ i = Format(j, "00")
 Next
 '''''''
 Dim r, l
-l = LstO.ListCount - 1
-For r = 0 To l
-LstO.RemoveItem 0
-Next
-For k = 0 To LstTm.ListCount - 1
-LstO.AddItem k + 1, k
-Next
+
 '''''''''''
 NDay = 1
 
@@ -603,6 +612,13 @@ If EOF(1) = True Then Close #1: Exit For
 Input #1, CTM, CL
 LstTm.AddItem CTM
 LstL.AddItem CL
+Next
+l = LstO.ListCount - 1
+For r = 0 To l
+LstO.RemoveItem 0
+Next
+For k = 0 To LstTm.ListCount - 1
+LstO.AddItem k + 1, k
 Next
 End Sub
 
