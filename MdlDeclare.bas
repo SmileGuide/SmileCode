@@ -10,6 +10,22 @@ Public StName As String
 Public NDay As Integer
 Public Saved As Boolean
 Public SelL As Integer
+Public Covered As Boolean
+Public SknColor
+Public CvrText 'which command results the cover
+Public NumColor
+Public TxtColor
+Public UnDis As Boolean '±‹√‚µ›πÈÀ¿—≠ª∑
+
+
+
+
+
+
+
+
+
+
 
 Public Declare Function ReleaseCapture Lib "user32" () As Long
 Public Declare Function SendMessage Lib "user32" Alias "SendMessageA" (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Long) As Long

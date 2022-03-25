@@ -183,3 +183,47 @@ End If
 End Function
 
 
+
+Public Function CodeThemeRead()
+SknColor = GetSetting("SmileTimetable", "Code", "BgColor")
+NumColor = GetSetting("SmileTimetable", "Code", "NumColor")
+TxtColor = GetSetting("SmileTimetable", "Code", "TxtColor")
+End Function
+
+Public Function CodeThemeReset()
+SaveSetting "SmileTimetable", "Code", "BgColor", &HC0C0C
+SaveSetting "SmileTimetable", "Code", "NumColor", &HFFFF&
+SaveSetting "SmileTimetable", "Code", "TxtColor", &HFFFFFF
+End Function
+
+Public Function ReflashCmdData()
+Dim i
+For i = 0 To Len(FrmCED.TxtCode.Text) - 1
+FrmCED.TxtCode.SelStart = i
+FrmCED.TxtCode.SelLength = 1
+If FrmCED.TxtCode.SelText = Chr(34) Or FrmCED.TxtCode.SelText = Chr(44) Then
+FrmCED.TxtCode.SelColor = &HFF00FF
+ElseIf FrmCED.TxtCode.SelText = Chr(34) Or FrmCED.TxtCode.SelText = Chr(44) Then
+FrmCED.TxtCode.SelColor = &HFF00FF
+ElseIf FrmCED.TxtCode.SelText = Chr(46) Then
+FrmCED.TxtCode.SelColor = &HFF00&
+ElseIf FrmCED.TxtCode.SelText = Chr(58) Then
+FrmCED.TxtCode.SelColor = &HFF00FF
+ElseIf FrmCED.TxtCode.SelText = Chr(59) Then
+FrmCED.TxtCode.SelColor = &HFF00&
+ElseIf FrmCED.TxtCode.SelText = Chr(123) Then
+FrmCED.TxtCode.SelColor = &HFF00&
+ElseIf FrmCED.TxtCode.SelText = Chr(125) Then
+FrmCED.TxtCode.SelColor = &HFF00&
+
+ElseIf Asc(FrmCED.TxtCode.SelText) >= 48 And Asc(FrmCED.TxtCode.SelText) <= 57 Then
+FrmCED.TxtCode.SelColor = NumColor
+End If
+FrmCED.TxtCode.SelLength = 3
+If FrmCED.TxtCode.SelText = "day" Then
+FrmCED.TxtCode.SelColor = &HFF00&
+End If
+Debug.Assert i = 4
+Next
+FrmCED.TxtCode.SelStart = Len(TxtCode.Text) - 1
+End Function
