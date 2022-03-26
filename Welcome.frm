@@ -320,6 +320,10 @@ Private Sub MnChangeWord_Click()
 LblWord.Caption = IEWord
 End Sub
 
+Private Sub LblWord_Click()
+
+End Sub
+
 Private Sub MnChangePicture_Click()
 'https://api.ixiaowai.cn/gqapi/gqapi.php
 ImgBk.Picture = LoadPicture(BkLink)
@@ -410,3 +414,8 @@ End Sub
 '''''''''''''''''''''
 'https://api.dujin.org/bing/1366.php
 ' https://api.ixiaowai.cn/gqapi/gqapi.php
+'https://api.dujin.org/bing/1920.php
+ 'https://unsplash.it/1600/900?random
+' https://img.xjh.me/random_img.php?type=bg&ctype=nature&return=302
+ 
+ 

@@ -1,4 +1,5 @@
 VERSION 5.00
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
 Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
 Begin VB.Form FrmCED 
    BackColor       =   &H00000000&
@@ -13,6 +14,15 @@ Begin VB.Form FrmCED
    ScaleHeight     =   6732
    ScaleWidth      =   11160
    StartUpPosition =   3  '窗口缺省
+   Begin MSComDlg.CommonDialog CmdC 
+      Left            =   2160
+      Top             =   1440
+      _ExtentX        =   847
+      _ExtentY        =   847
+      _Version        =   393216
+      CancelError     =   -1  'True
+      Color           =   16777215
+   End
    Begin RichTextLib.RichTextBox TxtCvr 
       Height          =   1326
       Left            =   0
@@ -23,6 +33,7 @@ Begin VB.Form FrmCED
       _ExtentX        =   1916
       _ExtentY        =   2339
       _Version        =   393217
+      Enabled         =   -1  'True
       TextRTF         =   $"FrmCED.frx":424A
    End
    Begin RichTextLib.RichTextBox TxtCode 
@@ -35,6 +46,7 @@ Begin VB.Form FrmCED
       _ExtentY        =   11864
       _Version        =   393217
       BackColor       =   789516
+      Enabled         =   -1  'True
       ScrollBars      =   3
       TextRTF         =   $"FrmCED.frx":42E7
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -76,6 +88,7 @@ TxtCode.Width = Me.Width
 TxtCode.Height = Me.Height
 End Sub
 Private Sub TxtCode_Change()
+Saved = False
 If UnDis Then UnDis = False: Exit Sub
 If Covered Then
     If CvrText = "clear" Then
@@ -165,6 +178,12 @@ TxtCode.SelLength = 11
 TxtCode.SelColor = &HFF00&
 TxtCode.SelStart = TxtCode.SelStart + 10
 
+ElseIf Right(LCase(TxtCode.Text), 11) = "skin-custom" Then
+TxtCode.SelStart = TxtCode.SelStart - 10
+TxtCode.SelLength = 11
+TxtCode.SelColor = &HFF00&
+TxtCode.SelStart = TxtCode.SelStart + 10
+
 End If
 
 '贴尾归位
@@ -174,10 +193,10 @@ Exit Sub
 45 On Error GoTo 999
 If Mid(TxtCode.Text, TxtCode.SelStart - 1, 2) = Chr(46) & vbCrLf Then
         ''''''''''''保存
-    ElseIf Mid(TxtCode.Text, TxtCode.SelStart - 5, 6) = "quit" & vbCrLf Then
+    ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 5, 6) = "quit" & vbCrLf Then
         Unload Me
         
-    ElseIf Mid(TxtCode.Text, TxtCode.SelStart - 6, 7) = "clear" & vbCrLf Then
+    ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 6, 7) = "clear" & vbCrLf Then
         CvrText = "clear"
         UnDis = False
         TxtCvr.Text = TxtCode.Text
@@ -198,7 +217,7 @@ If Mid(TxtCode.Text, TxtCode.SelStart - 1, 2) = Chr(46) & vbCrLf Then
         ReflashCmdData
         
         
-    ElseIf Mid(TxtCode.Text, TxtCode.SelStart - 10, 11) = "skin-dark" & vbCrLf Then
+    ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 10, 11) = "skin-dark" & vbCrLf Then
         TxtCode.SelStart = TxtCode.SelStart - 11
         TxtCode.SelLength = 11
         TxtCode.SelText = ""
@@ -212,7 +231,7 @@ If Mid(TxtCode.Text, TxtCode.SelStart - 1, 2) = Chr(46) & vbCrLf Then
         Me.BackColor = SknColor
         TxtCode.BackColor = SknColor
         TxtColor = vbWhite
-ElseIf Mid(TxtCode.Text, TxtCode.SelStart - 12, 13) = "skin-bright" & vbCrLf Then
+ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 12, 13) = "skin-bright" & vbCrLf Then
         TxtCode.SelStart = TxtCode.SelStart - 13
         TxtCode.SelLength = 13
         TxtCode.SelText = ""
@@ -220,12 +239,37 @@ ElseIf Mid(TxtCode.Text, TxtCode.SelStart - 12, 13) = "skin-bright" & vbCrLf The
         SaveSetting "SmileTimetable", "Code", "BgColor", &HFFFFFF
         SaveSetting "SmileTimetable", "Code", "NumColor", &H2469F6
         SaveSetting "SmileTimetable", "Code", "TxtColor", vbBlack
-        SknColor = GetSetting("SmileTimetable", "Code", "BgColor")
+        
         NumColor = GetSetting("SmileTimetable", "Code", "NumColor")
         Me.BackColor = SknColor
         TxtCode.BackColor = SknColor
         TxtColor = vbBlack
+ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 12, 13) = "skin-custom" & vbCrLf Then
+        TxtCode.SelStart = TxtCode.SelStart - 13
+        TxtCode.SelLength = 13
+        TxtCode.SelText = ""
+        TxtCode.SelStart = TxtCode.SelStart + 13
+        On Error GoTo GetsErr
+        SknColor = GetSetting("SmileTimetable", "Code", "BgColorCustom")
+        SaveSetting "SmileTimetable", "Code", "BgColor", SknColor
+        NumColor = GetSetting("SmileTimetable", "Code", "NumColorCustom")
+        SaveSetting "SmileTimetable", "Code", "NumColor", NumColor
+        TxtColor = GetSetting("SmileTimetable", "Code", "TxtColorCustom")
+        SaveSetting "SmileTimetable", "Code", "TxtColor", TxtColor
+        Me.BackColor = SknColor
+        TxtCode.BackColor = SknColor
+        
+        
+ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 20, 21) = "skin-custom-setting" & vbCrLf Then
+        TxtCode.SelStart = TxtCode.SelStart - 21
+        TxtCode.SelLength = 21
+        TxtCode.SelText = ""
+        TxtCode.SelStart = TxtCode.SelStart + 21
+        
+        
     End If
+    Exit Sub
+GetsErr:
 999 End Sub
 
 '''''''''''''''''''''''

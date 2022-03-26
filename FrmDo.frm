@@ -1,6 +1,6 @@
 VERSION 5.00
 Begin VB.Form FrmDo 
-   BackColor       =   &H00C0FFFF&
+   BackColor       =   &H0080FFFF&
    BorderStyle     =   4  'Fixed ToolWindow
    Caption         =   "管理课程表"
    ClientHeight    =   2502
