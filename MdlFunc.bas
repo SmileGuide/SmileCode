@@ -197,6 +197,7 @@ SaveSetting "SmileTimetable", "Code", "TxtColor", &HFFFFFF
 End Function
 
 Public Function ReflashCmdData()
+On Error GoTo 99
 Dim i
 For i = 0 To Len(FrmCED.TxtCode.Text) - 1
 FrmCED.TxtCode.SelStart = i
@@ -215,15 +216,24 @@ ElseIf FrmCED.TxtCode.SelText = Chr(123) Then
 FrmCED.TxtCode.SelColor = &HFF00&
 ElseIf FrmCED.TxtCode.SelText = Chr(125) Then
 FrmCED.TxtCode.SelColor = &HFF00&
-
+Debug.Print Asc(FrmCED.TxtCode.SelText)
 ElseIf Asc(FrmCED.TxtCode.SelText) >= 48 And Asc(FrmCED.TxtCode.SelText) <= 57 Then
 FrmCED.TxtCode.SelColor = NumColor
+Else
+FrmCED.TxtCode.SelColor = TxtColor
 End If
 FrmCED.TxtCode.SelLength = 3
 If FrmCED.TxtCode.SelText = "day" Then
 FrmCED.TxtCode.SelColor = &HFF00&
+Else
+FrmCED.TxtCode.SelColor = TxtColor
 End If
-Debug.Assert i = 4
-Next
+FrmCED.TxtCode.SelLength = 5
+If FrmCED.TxtCode.SelText = "clear" Then
+TxtCode.SelColor = &HFF00&
+Else
+FrmCED.TxtCode.SelColor = TxtColor
+End If
+99 Next
 FrmCED.TxtCode.SelStart = Len(TxtCode.Text) - 1
 End Function

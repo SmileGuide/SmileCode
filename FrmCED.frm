@@ -23,7 +23,6 @@ Begin VB.Form FrmCED
       _ExtentX        =   1916
       _ExtentY        =   2339
       _Version        =   393217
-      Enabled         =   -1  'True
       TextRTF         =   $"FrmCED.frx":424A
    End
    Begin RichTextLib.RichTextBox TxtCode 
@@ -36,7 +35,6 @@ Begin VB.Form FrmCED
       _ExtentY        =   11864
       _Version        =   393217
       BackColor       =   789516
-      Enabled         =   -1  'True
       ScrollBars      =   3
       TextRTF         =   $"FrmCED.frx":42E7
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -77,7 +75,6 @@ Private Sub Form_Paint()
 TxtCode.Width = Me.Width
 TxtCode.Height = Me.Height
 End Sub
-
 Private Sub TxtCode_Change()
 If UnDis Then UnDis = False: Exit Sub
 If Covered Then
@@ -98,6 +95,7 @@ End If
 
 
 On Error Resume Next
+
 If Mid(TxtCode.Text, TxtCode.SelStart, 2) = Chr(10) Or Mid(TxtCode.Text, TxtCode.SelStart, 1) = Chr(10) Then GoTo 45
 On Error Resume Next
 33 TxtCode.SelStart = TxtCode.SelStart - 1
@@ -168,6 +166,7 @@ TxtCode.SelColor = &HFF00&
 TxtCode.SelStart = TxtCode.SelStart + 10
 
 End If
+
 'ÌùÎ²¹éÎ»
 TxtCode.SelStart = TxtCode.SelStart + 1
 99 TxtCode.SelLength = 0
@@ -233,6 +232,4 @@ ElseIf Mid(TxtCode.Text, TxtCode.SelStart - 12, 13) = "skin-bright" & vbCrLf The
 '²¹³äÃüÁîµÄ·´À¡
 'help
 'format¸ñÊ½Ì×
-Private Sub TxtCvr_Change()
 
-End Sub
