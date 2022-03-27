@@ -33,7 +33,6 @@ Begin VB.Form FrmCED
       _ExtentX        =   1916
       _ExtentY        =   2339
       _Version        =   393217
-      Enabled         =   -1  'True
       TextRTF         =   $"FrmCED.frx":424A
    End
    Begin RichTextLib.RichTextBox TxtCode 
@@ -46,7 +45,6 @@ Begin VB.Form FrmCED
       _ExtentY        =   11864
       _Version        =   393217
       BackColor       =   789516
-      Enabled         =   -1  'True
       ScrollBars      =   3
       TextRTF         =   $"FrmCED.frx":42E7
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -70,7 +68,7 @@ Option Explicit
 
 
 Private Sub Command1_Click()
-ReflashCmdData
+ReflashCmdFormat
 End Sub
 
 Private Sub Form_Load()
@@ -114,41 +112,9 @@ On Error Resume Next
 33 TxtCode.SelStart = TxtCode.SelStart - 1
 TxtCode.SelLength = 1
 TxtCode.SelColor = TxtColor
-If Right(TxtCode.Text, 1) = Chr(34) Or Right(TxtCode.Text, 1) = Chr(44) Then
-TxtCode.SelLength = 1
-TxtCode.SelColor = &HFF00FF
 
-ElseIf Right(TxtCode.Text, 1) = Chr(46) Then
-TxtCode.SelLength = 1
-TxtCode.SelColor = &HFF00&
 
-ElseIf Right(TxtCode.Text, 1) = Chr(58) Then
-TxtCode.SelLength = 1
-TxtCode.SelColor = &HFF00FF
-
-ElseIf Right(TxtCode.Text, 1) = Chr(59) Then
-TxtCode.SelLength = 1
-TxtCode.SelColor = &HFF00&
-
-ElseIf Right(TxtCode.Text, 1) = Chr(123) Then
-TxtCode.SelLength = 1
-TxtCode.SelColor = &HFF00&
-
-ElseIf Right(TxtCode.Text, 1) = Chr(125) Then
-TxtCode.SelLength = 1
-TxtCode.SelColor = &HFF00&
-
-ElseIf Asc(Right(TxtCode.Text, 1)) >= 48 And Asc(Right(TxtCode.Text, 1)) <= 57 Then
-TxtCode.SelLength = 1
-TxtCode.SelColor = NumColor
-
-ElseIf Right(LCase(TxtCode.Text), 3) = "day" Then
-TxtCode.SelStart = TxtCode.SelStart - 2
-TxtCode.SelLength = 3
-TxtCode.SelColor = &HFF00&
-TxtCode.SelStart = TxtCode.SelStart + 2
-
-ElseIf Right(LCase(TxtCode.Text), 5) = "clear" Then
+If Right(LCase(TxtCode.Text), 5) = "clear" Then
 TxtCode.SelStart = TxtCode.SelStart - 4
 TxtCode.SelLength = 5
 TxtCode.SelColor = &HFF00&
@@ -190,8 +156,12 @@ End If
 TxtCode.SelStart = TxtCode.SelStart + 1
 99 TxtCode.SelLength = 0
 Exit Sub
-45 On Error GoTo 999
-If Mid(TxtCode.Text, TxtCode.SelStart - 1, 2) = Chr(46) & vbCrLf Then
+
+
+
+
+
+45 If Mid(TxtCode.Text, TxtCode.SelStart - 1, 2) = Chr(46) & vbCrLf Then
         ''''''''''''保存
     ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 5, 6) = "quit" & vbCrLf Then
         Unload Me
@@ -203,6 +173,7 @@ If Mid(TxtCode.Text, TxtCode.SelStart - 1, 2) = Chr(46) & vbCrLf Then
         TxtCvr.Text = Left(TxtCvr.Text, Len(TxtCvr.Text) - 7)
         Dim CauText As String
         UnDis = True
+        ReflashCmdFormat
         CauText = "警告：此操作是不可逆的。" & Chr(10) & "确定要执行此命令，请输入y后回车；撤回此命令，请连续按下回车。>>"
         TxtCode.Text = TxtCode.Text & vbCrLf & CauText
         TxtCode.SelStart = Len(TxtCode.Text) - Len(CauText)
@@ -213,8 +184,9 @@ If Mid(TxtCode.Text, TxtCode.SelStart - 1, 2) = Chr(46) & vbCrLf Then
         TxtCode.SelLength = 34
         TxtCode.SelColor = TxtColor
         TxtCode.SelStart = Len(TxtCode.Text)
+        TxtCode.SelLength = 0
         Covered = True
-        ReflashCmdData
+
         
         
     ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 10, 11) = "skin-dark" & vbCrLf Then
@@ -231,6 +203,7 @@ If Mid(TxtCode.Text, TxtCode.SelStart - 1, 2) = Chr(46) & vbCrLf Then
         Me.BackColor = SknColor
         TxtCode.BackColor = SknColor
         TxtColor = vbWhite
+        ReflashCmdFormat
 ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 12, 13) = "skin-bright" & vbCrLf Then
         TxtCode.SelStart = TxtCode.SelStart - 13
         TxtCode.SelLength = 13
@@ -241,9 +214,11 @@ ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 12, 13) = "skin-bright" & vbC
         SaveSetting "SmileTimetable", "Code", "TxtColor", vbBlack
         
         NumColor = GetSetting("SmileTimetable", "Code", "NumColor")
+        SknColor = GetSetting("SmileTimetable", "Code", "BgColor")
         Me.BackColor = SknColor
         TxtCode.BackColor = SknColor
         TxtColor = vbBlack
+        ReflashCmdFormat
 ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 12, 13) = "skin-custom" & vbCrLf Then
         TxtCode.SelStart = TxtCode.SelStart - 13
         TxtCode.SelLength = 13
@@ -268,6 +243,7 @@ ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 20, 21) = "skin-custom-settin
         
         
     End If
+    If Not Covered Then ReflashCmdFormat
     Exit Sub
 GetsErr:
 999 End Sub

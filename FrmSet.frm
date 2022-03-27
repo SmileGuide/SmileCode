@@ -311,19 +311,7 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Private Sub Frame1_DragDrop(Source As Control, X As Single, Y As Single)
-
-End Sub
-
-Private Sub FrmGui_DragDrop(Source As Control, X As Single, Y As Single)
-
-End Sub
-
 Private Sub Label1_Click()
-
-End Sub
-
-Private Sub LblCM_Click()
 
 End Sub
 
@@ -331,10 +319,3 @@ Private Sub LblGM_Click()
 
 End Sub
 
-Private Sub LblCMark_Click()
-
-End Sub
-
-Private Sub LblGMain_Click()
-
-End Sub

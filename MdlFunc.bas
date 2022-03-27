@@ -196,44 +196,43 @@ SaveSetting "SmileTimetable", "Code", "NumColor", &HFFFF&
 SaveSetting "SmileTimetable", "Code", "TxtColor", &HFFFFFF
 End Function
 
-Public Function ReflashCmdData()
-On Error GoTo 99
+Public Function ReflashCmdFormat()
+On Error GoTo 77
+FrmCED.TxtCode.SelStart = 0
+FrmCED.TxtCode.SelLength = Len(FrmCED.TxtCode.Text)
+FrmCED.TxtCode.SelColor = TxtColor
+
 Dim i
 For i = 0 To Len(FrmCED.TxtCode.Text) - 1
 FrmCED.TxtCode.SelStart = i
 FrmCED.TxtCode.SelLength = 1
-If FrmCED.TxtCode.SelText = Chr(34) Or FrmCED.TxtCode.SelText = Chr(44) Then
+
+Select Case FrmCED.TxtCode.SelText
+Case Chr(34), Chr(44), Chr(58)
 FrmCED.TxtCode.SelColor = &HFF00FF
-ElseIf FrmCED.TxtCode.SelText = Chr(34) Or FrmCED.TxtCode.SelText = Chr(44) Then
-FrmCED.TxtCode.SelColor = &HFF00FF
-ElseIf FrmCED.TxtCode.SelText = Chr(46) Then
+
+Case Chr(46), Chr(59), Chr(123), Chr(125)
 FrmCED.TxtCode.SelColor = &HFF00&
-ElseIf FrmCED.TxtCode.SelText = Chr(58) Then
-FrmCED.TxtCode.SelColor = &HFF00FF
-ElseIf FrmCED.TxtCode.SelText = Chr(59) Then
-FrmCED.TxtCode.SelColor = &HFF00&
-ElseIf FrmCED.TxtCode.SelText = Chr(123) Then
-FrmCED.TxtCode.SelColor = &HFF00&
-ElseIf FrmCED.TxtCode.SelText = Chr(125) Then
-FrmCED.TxtCode.SelColor = &HFF00&
-Debug.Print Asc(FrmCED.TxtCode.SelText)
-ElseIf Asc(FrmCED.TxtCode.SelText) >= 48 And Asc(FrmCED.TxtCode.SelText) <= 57 Then
+Case 0 To 9
 FrmCED.TxtCode.SelColor = NumColor
-Else
-FrmCED.TxtCode.SelColor = TxtColor
-End If
+End Select
+
+
+
 FrmCED.TxtCode.SelLength = 3
-If FrmCED.TxtCode.SelText = "day" Then
+Select Case FrmCED.TxtCode.SelText
+Case "day"
 FrmCED.TxtCode.SelColor = &HFF00&
-Else
-FrmCED.TxtCode.SelColor = TxtColor
-End If
+End Select
+
 FrmCED.TxtCode.SelLength = 5
-If FrmCED.TxtCode.SelText = "clear" Then
+Select Case FrmCED.TxtCode.SelText
+Case "clear"
 TxtCode.SelColor = &HFF00&
-Else
-FrmCED.TxtCode.SelColor = TxtColor
-End If
-99 Next
-FrmCED.TxtCode.SelStart = Len(TxtCode.Text) - 1
+End Select
+Next
+FrmCED.TxtCode.SelLength = 0
+FrmCED.TxtCode.SelStart = Len(TxtCode.Text) + 1
+Exit Function
+77
 End Function

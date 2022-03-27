@@ -320,10 +320,6 @@ Private Sub MnChangeWord_Click()
 LblWord.Caption = IEWord
 End Sub
 
-Private Sub LblWord_Click()
-
-End Sub
-
 Private Sub MnChangePicture_Click()
 'https://api.ixiaowai.cn/gqapi/gqapi.php
 ImgBk.Picture = LoadPicture(BkLink)
