@@ -214,10 +214,10 @@ FrmCED.TxtCode.SelLength = 1
 
 Select Case FrmCED.TxtCode.SelText
 Case Chr(34), Chr(44), Chr(58)
-FrmCED.TxtCode.SelColor = &HFF00FF
+FrmCED.TxtCode.SelColor = SpcColor
 
 Case Chr(46), Chr(59), Chr(123), Chr(125)
-FrmCED.TxtCode.SelColor = &HFF00&
+FrmCED.TxtCode.SelColor = CmdColor
 Case 0 To 9
 FrmCED.TxtCode.SelColor = NumColor
 End Select
@@ -227,13 +227,13 @@ End Select
 FrmCED.TxtCode.SelLength = 3
 Select Case FrmCED.TxtCode.SelText
 Case "day"
-FrmCED.TxtCode.SelColor = &HFF00&
+FrmCED.TxtCode.SelColor = CmdColor
 End Select
 
 FrmCED.TxtCode.SelLength = 5
 Select Case FrmCED.TxtCode.SelText
 Case "clear"
-FrmCED.TxtCode.SelColor = &HFF00&
+FrmCED.TxtCode.SelColor = CmdColor
 End Select
 
 
@@ -242,4 +242,11 @@ FrmCED.TxtCode.SelLength = 0
 FrmCED.TxtCode.SelStart = Len(FrmCED.TxtCode.Text) + 1
 Exit Function
 77
+End Function
+
+
+
+Public Function SampleTxt()
+SampleTxt = "{" & _
+"day"
 End Function

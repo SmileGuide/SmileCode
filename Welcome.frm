@@ -14,8 +14,8 @@ Begin VB.Form FrmWel
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   MouseIcon       =   "Welcome.frx":F9DA
-   Picture         =   "Welcome.frx":10AA4
+   MouseIcon       =   "Welcome.frx":424A
+   Picture         =   "Welcome.frx":5314
    ScaleHeight     =   7854
    ScaleWidth      =   13344
    ShowInTaskbar   =   0   'False
@@ -86,7 +86,7 @@ Begin VB.Form FrmWel
       EndProperty
       Height          =   726
       Left            =   3900
-      MouseIcon       =   "Welcome.frx":212EE
+      MouseIcon       =   "Welcome.frx":15B5E
       Style           =   1  'Graphical
       TabIndex        =   1
       Top             =   5280
@@ -130,7 +130,7 @@ Begin VB.Form FrmWel
    Begin VB.Image ImgBk 
       Height          =   6480
       Left            =   0
-      Picture         =   "Welcome.frx":223B8
+      Picture         =   "Welcome.frx":16C28
       Top             =   0
       Width           =   11520
    End

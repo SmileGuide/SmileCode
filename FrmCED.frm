@@ -33,7 +33,6 @@ Begin VB.Form FrmCED
       _ExtentX        =   1916
       _ExtentY        =   2339
       _Version        =   393217
-      Enabled         =   -1  'True
       TextRTF         =   $"FrmCED.frx":424A
    End
    Begin RichTextLib.RichTextBox TxtCode 
@@ -46,7 +45,6 @@ Begin VB.Form FrmCED
       _ExtentY        =   11864
       _Version        =   393217
       BackColor       =   789516
-      Enabled         =   -1  'True
       ScrollBars      =   3
       TextRTF         =   $"FrmCED.frx":42E7
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -67,6 +65,8 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 Dim LastPsn
+Dim CRLFED
+Dim CauText As String
 
 Private Sub Command1_Click()
 ReflashCmdFormat
@@ -90,8 +90,9 @@ Private Sub TxtCode_Change()
 Saved = False
 If UnDis Then UnDis = False: Exit Sub
 If Covered Then
-    If CvrText = "clear" Then
+    Select Case CvrText
     Dim lstWord
+    Case "clear"
     lstWord = Right(TxtCode.Text, 3)
         If lstWord = "y" & vbCrLf Then
             TxtCode.SelStart = 0
@@ -100,10 +101,18 @@ If Covered Then
         Else
             TxtCode.Text = TxtCvr.Text
         End If
-    End If
+    Case "quit"
+        lstWord = Right(TxtCode.Text, 3)
+        If lstWord = "y" & vbCrLf Then
+            Saved = True
+            Unload Me
+        Else
+            TxtCode.Text = TxtCvr.Text
+        End If
+    End Select
 Covered = False
 End If
-
+On Error Resume Next
 Dim p
 p = TxtCode.SelStart
 TxtCode.SelStart = LastPsn
@@ -113,60 +122,104 @@ TxtCode.SelColor = TxtColor
 TxtCode.SelLength = 0
 TxtCode.SelStart = p
 
-On Error Resume Next
-If Mid(TxtCode.Text, TxtCode.SelStart, 2) = Chr(10) Or Mid(TxtCode.Text, TxtCode.SelStart, 1) = Chr(10) Then GoTo 45
+On Error GoTo 77
 
+If Mid(TxtCode.Text, TxtCode.SelStart, 2) = Chr(10) Or Mid(TxtCode.Text, TxtCode.SelStart, 1) = Chr(10) Then CRLFED = True: GoTo 45
+CRLFED = False
 33 TxtCode.SelStart = TxtCode.SelStart - 1
 TxtCode.SelLength = 1
 TxtCode.SelColor = TxtColor
 
 
+
 If Right(LCase(TxtCode.Text), 5) = "clear" Then
 TxtCode.SelStart = TxtCode.SelStart - 4
 TxtCode.SelLength = 5
-TxtCode.SelColor = &HFF00&
+TxtCode.SelColor = CmdColor
 TxtCode.SelStart = TxtCode.SelStart + 4
 
 ElseIf Right(LCase(TxtCode.Text), 4) = "quit" Then
 TxtCode.SelStart = TxtCode.SelStart - 3
 TxtCode.SelLength = 4
-TxtCode.SelColor = &HFF00&
+TxtCode.SelColor = CmdColor
 TxtCode.SelStart = TxtCode.SelStart + 3
 
 ElseIf Right(LCase(TxtCode.Text), 4) = "help" Then
 TxtCode.SelStart = TxtCode.SelStart - 3
 TxtCode.SelLength = 4
-TxtCode.SelColor = &HFF00&
+TxtCode.SelColor = CmdColor
 TxtCode.SelStart = TxtCode.SelStart + 3
 
-ElseIf Right(LCase(TxtCode.Text), 2) = "**" Then
-TxtCode.SelStart = TxtCode.SelStart - 1
-TxtCode.SelLength = 2
-TxtCode.SelColor = &HFF00&
-TxtCode.SelStart = TxtCode.SelStart + 1
 
-ElseIf Right(LCase(TxtCode.Text), 1) = "*" Then
-TxtCode.SelStart = TxtCode.SelStart
+ElseIf Right(LCase(TxtCode.Text), 6) = "format" Then
+TxtCode.SelStart = TxtCode.SelStart - 5
+TxtCode.SelLength = 6
+TxtCode.SelColor = CmdColor
+TxtCode.SelStart = TxtCode.SelStart + 5
+
+ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart, 2) = "**" Then
+        Dim pp
+        pp = TxtCode.SelStart
+        FrmCED.TxtCode.SelStart = 0
+        FrmCED.TxtCode.SelLength = Len(FrmCED.TxtCode.Text)
+        FrmCED.TxtCode.SelColor = TxtColor
+        
+        Dim i
+        For i = 0 To Len(FrmCED.TxtCode.Text) - 1
+        FrmCED.TxtCode.SelStart = i
+        FrmCED.TxtCode.SelLength = 1
+        
+        Select Case FrmCED.TxtCode.SelText
+        Case Chr(34), Chr(44), Chr(58)
+        FrmCED.TxtCode.SelColor = SpcColor
+        
+        Case Chr(46), Chr(59), Chr(123), Chr(125)
+        FrmCED.TxtCode.SelColor = CmdColor
+        Case 0 To 9
+        FrmCED.TxtCode.SelColor = NumColor
+        End Select
+
+        FrmCED.TxtCode.SelLength = 2
+        If FrmCED.TxtCode.SelText = "**" Then FrmCED.TxtCode.SelText = ""
+
+        FrmCED.TxtCode.SelLength = 3
+        Select Case FrmCED.TxtCode.SelText
+        Case "day"
+        FrmCED.TxtCode.SelColor = CmdColor
+        End Select
+        
+        FrmCED.TxtCode.SelLength = 5
+        Select Case FrmCED.TxtCode.SelText
+        Case "clear"
+        FrmCED.TxtCode.SelColor = CmdColor
+        End Select
+        
+        
+        Next
+        FrmCED.TxtCode.SelLength = 0
+        TxtCode.SelStart = pp
+    
+77 ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart + 1, 1) = "*" Then
 TxtCode.SelLength = 1
-TxtCode.SelColor = &HFF00&
+TxtCode.SelColor = CmdColor
 TxtCode.SelStart = TxtCode.SelStart + 1
 
 ElseIf Right(LCase(TxtCode.Text), 9) = "skin-dark" Then
 TxtCode.SelStart = TxtCode.SelStart - 8
 TxtCode.SelLength = 9
-TxtCode.SelColor = &HFF00&
+TxtCode.SelColor = CmdColor
 TxtCode.SelStart = TxtCode.SelStart + 8
 
 ElseIf Right(LCase(TxtCode.Text), 11) = "skin-bright" Then
 TxtCode.SelStart = TxtCode.SelStart - 10
 TxtCode.SelLength = 11
-TxtCode.SelColor = &HFF00&
+TxtCode.SelColor = CmdColor
 TxtCode.SelStart = TxtCode.SelStart + 10
 
 ElseIf Right(LCase(TxtCode.Text), 11) = "skin-custom" Then
 TxtCode.SelStart = TxtCode.SelStart - 10
 TxtCode.SelLength = 11
-TxtCode.SelColor = &HFF00&
+TxtCode.SelColor = CmdColor
 TxtCode.SelStart = TxtCode.SelStart + 10
 
 End If
@@ -174,6 +227,7 @@ End If
 '贴尾归位
 TxtCode.SelStart = TxtCode.SelStart + 1
 99 TxtCode.SelLength = 0
+If Not Covered And CRLFED Then ReflashCmdFormat
 Exit Sub
 
 
@@ -184,14 +238,33 @@ Exit Sub
 If Mid(TxtCode.Text, TxtCode.SelStart - 1, 2) = Chr(46) & vbCrLf Then
         ''''''''''''保存
     ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 5, 6) = "quit" & vbCrLf Then
-        Unload Me
+        CvrText = "quit"
+        UnDis = False
+        TxtCvr.Text = TxtCode.Text
+        TxtCvr.Text = Left(TxtCvr.Text, Len(TxtCvr.Text) - 6)
+
+        UnDis = True
+        
+        CauText = "警告：你还没有保存课程表。" & Chr(10) & "确定要执行此命令，请输入y后回车；撤回此命令，请连续按下回车。>>"
+        TxtCode.Text = TxtCode.Text & vbCrLf & CauText
+        ReflashCmdFormat
+        TxtCode.SelStart = Len(TxtCode.Text) - Len(CauText)
+        TxtCode.SelLength = 14
+        TxtCode.SelColor = vbRed
+        TxtCode.SelLength = 0
+        TxtCode.SelStart = Len(TxtCode.Text) - 34
+        TxtCode.SelLength = 34
+        TxtCode.SelColor = TxtColor
+        TxtCode.SelStart = Len(TxtCode.Text)
+        TxtCode.SelLength = 0
+        Covered = True
         
     ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 6, 7) = "clear" & vbCrLf Then
         CvrText = "clear"
         UnDis = False
         TxtCvr.Text = TxtCode.Text
         TxtCvr.Text = Left(TxtCvr.Text, Len(TxtCvr.Text) - 7)
-        Dim CauText As String
+
         UnDis = True
         
         CauText = "警告：此操作是不可逆的。" & Chr(10) & "确定要执行此命令，请输入y后回车；撤回此命令，请连续按下回车。>>"
@@ -208,13 +281,11 @@ If Mid(TxtCode.Text, TxtCode.SelStart - 1, 2) = Chr(46) & vbCrLf Then
         TxtCode.SelLength = 0
         Covered = True
 
+        ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 7, 8) = "format" & vbCrLf Then
+        
 
 
 
-
-    ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 3, 4) = "**" Then
-        TxtCode.Text = Left(TxtCode.Text, Len(TxtCode.Text) - 4)
-        ReflashCmdFormat
 
 
 
@@ -287,5 +358,5 @@ ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 20, 21) = "skin-custom-settin
 '''''''''''''''''''''''
 '补充命令的反馈
 'help
-'format格式套
+'format格式套half双书签
 'cmd字体
