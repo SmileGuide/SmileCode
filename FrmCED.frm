@@ -33,6 +33,7 @@ Begin VB.Form FrmCED
       _ExtentX        =   1916
       _ExtentY        =   2339
       _Version        =   393217
+      Enabled         =   -1  'True
       TextRTF         =   $"FrmCED.frx":424A
    End
    Begin RichTextLib.RichTextBox TxtCode 
@@ -45,13 +46,14 @@ Begin VB.Form FrmCED
       _ExtentY        =   11864
       _Version        =   393217
       BackColor       =   789516
+      Enabled         =   -1  'True
       ScrollBars      =   3
       TextRTF         =   $"FrmCED.frx":42E7
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "宋体"
          Size            =   10.5
          Charset         =   134
-         Weight          =   400
+         Weight          =   700
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
@@ -64,8 +66,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
-
-
+Dim LastPsn
 
 Private Sub Command1_Click()
 ReflashCmdFormat
@@ -103,12 +104,18 @@ If Covered Then
 Covered = False
 End If
 
-
+Dim p
+p = TxtCode.SelStart
+TxtCode.SelStart = LastPsn
+TxtCode.SelLength = Len(TxtCode.Text) - 1
+LastPsn = TxtCode.SelStart + TxtCode.SelLength
+TxtCode.SelColor = TxtColor
+TxtCode.SelLength = 0
+TxtCode.SelStart = p
 
 On Error Resume Next
-
 If Mid(TxtCode.Text, TxtCode.SelStart, 2) = Chr(10) Or Mid(TxtCode.Text, TxtCode.SelStart, 1) = Chr(10) Then GoTo 45
-On Error Resume Next
+
 33 TxtCode.SelStart = TxtCode.SelStart - 1
 TxtCode.SelLength = 1
 TxtCode.SelColor = TxtColor
@@ -131,6 +138,18 @@ TxtCode.SelStart = TxtCode.SelStart - 3
 TxtCode.SelLength = 4
 TxtCode.SelColor = &HFF00&
 TxtCode.SelStart = TxtCode.SelStart + 3
+
+ElseIf Right(LCase(TxtCode.Text), 2) = "**" Then
+TxtCode.SelStart = TxtCode.SelStart - 1
+TxtCode.SelLength = 2
+TxtCode.SelColor = &HFF00&
+TxtCode.SelStart = TxtCode.SelStart + 1
+
+ElseIf Right(LCase(TxtCode.Text), 1) = "*" Then
+TxtCode.SelStart = TxtCode.SelStart
+TxtCode.SelLength = 1
+TxtCode.SelColor = &HFF00&
+TxtCode.SelStart = TxtCode.SelStart + 1
 
 ElseIf Right(LCase(TxtCode.Text), 9) = "skin-dark" Then
 TxtCode.SelStart = TxtCode.SelStart - 8
@@ -161,7 +180,8 @@ Exit Sub
 
 
 
-45 If Mid(TxtCode.Text, TxtCode.SelStart - 1, 2) = Chr(46) & vbCrLf Then
+45
+If Mid(TxtCode.Text, TxtCode.SelStart - 1, 2) = Chr(46) & vbCrLf Then
         ''''''''''''保存
     ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 5, 6) = "quit" & vbCrLf Then
         Unload Me
@@ -173,9 +193,10 @@ Exit Sub
         TxtCvr.Text = Left(TxtCvr.Text, Len(TxtCvr.Text) - 7)
         Dim CauText As String
         UnDis = True
-        ReflashCmdFormat
+        
         CauText = "警告：此操作是不可逆的。" & Chr(10) & "确定要执行此命令，请输入y后回车；撤回此命令，请连续按下回车。>>"
         TxtCode.Text = TxtCode.Text & vbCrLf & CauText
+        ReflashCmdFormat
         TxtCode.SelStart = Len(TxtCode.Text) - Len(CauText)
         TxtCode.SelLength = 13
         TxtCode.SelColor = vbRed
@@ -187,15 +208,25 @@ Exit Sub
         TxtCode.SelLength = 0
         Covered = True
 
-        
-        
+
+
+
+
+    ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 3, 4) = "**" Then
+        TxtCode.Text = Left(TxtCode.Text, Len(TxtCode.Text) - 4)
+        ReflashCmdFormat
+
+
+
+       
     ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 10, 11) = "skin-dark" & vbCrLf Then
         TxtCode.SelStart = TxtCode.SelStart - 11
         TxtCode.SelLength = 11
         TxtCode.SelText = ""
         TxtCode.SelStart = TxtCode.SelStart + 11
         SaveSetting "SmileTimetable", "Code", "BgColor", &HC0C0C
-
+        SaveSetting "SmileTimetable", "Code", "SpecialColor", &HFF00FF
+    SaveSetting "SmileTimetable", "Code", "CommandColor", &HFF00&
         SaveSetting "SmileTimetable", "Code", "NumColor", &HFFFF&
         SknColor = GetSetting("SmileTimetable", "Code", "BgColor")
         NumColor = GetSetting("SmileTimetable", "Code", "NumColor")
@@ -203,6 +234,8 @@ Exit Sub
         Me.BackColor = SknColor
         TxtCode.BackColor = SknColor
         TxtColor = vbWhite
+        SpcColor = &HFF00FF
+        CmdColor = &HFF00&
         ReflashCmdFormat
 ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 12, 13) = "skin-bright" & vbCrLf Then
         TxtCode.SelStart = TxtCode.SelStart - 13
@@ -212,19 +245,22 @@ ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 12, 13) = "skin-bright" & vbC
         SaveSetting "SmileTimetable", "Code", "BgColor", &HFFFFFF
         SaveSetting "SmileTimetable", "Code", "NumColor", &H2469F6
         SaveSetting "SmileTimetable", "Code", "TxtColor", vbBlack
-        
+        SaveSetting "SmileTimetable", "Code", "SpecialColor", &HFF00FF
+        SaveSetting "SmileTimetable", "Code", "CommandColor", &HFF00&
         NumColor = GetSetting("SmileTimetable", "Code", "NumColor")
         SknColor = GetSetting("SmileTimetable", "Code", "BgColor")
         Me.BackColor = SknColor
         TxtCode.BackColor = SknColor
         TxtColor = vbBlack
+                SpcColor = &HFF00FF
+        CmdColor = &HFF00&
         ReflashCmdFormat
 ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 12, 13) = "skin-custom" & vbCrLf Then
         TxtCode.SelStart = TxtCode.SelStart - 13
         TxtCode.SelLength = 13
         TxtCode.SelText = ""
         TxtCode.SelStart = TxtCode.SelStart + 13
-        On Error GoTo GetsErr
+
         SknColor = GetSetting("SmileTimetable", "Code", "BgColorCustom")
         SaveSetting "SmileTimetable", "Code", "BgColor", SknColor
         NumColor = GetSetting("SmileTimetable", "Code", "NumColorCustom")
@@ -245,11 +281,11 @@ ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 20, 21) = "skin-custom-settin
     End If
     If Not Covered Then ReflashCmdFormat
     Exit Sub
-GetsErr:
+
 999 End Sub
 
 '''''''''''''''''''''''
 '补充命令的反馈
 'help
 'format格式套
-
+'cmd字体

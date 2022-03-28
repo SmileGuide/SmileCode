@@ -188,12 +188,17 @@ Public Function CodeThemeRead()
 SknColor = GetSetting("SmileTimetable", "Code", "BgColor")
 NumColor = GetSetting("SmileTimetable", "Code", "NumColor")
 TxtColor = GetSetting("SmileTimetable", "Code", "TxtColor")
+SpcColor = GetSetting("SmileTimetable", "Code", "SpecialColor")
+CmdColor = GetSetting("SmileTimetable", "Code", "CommandColor")
 End Function
 
 Public Function CodeThemeReset()
 SaveSetting "SmileTimetable", "Code", "BgColor", &HC0C0C
 SaveSetting "SmileTimetable", "Code", "NumColor", &HFFFF&
 SaveSetting "SmileTimetable", "Code", "TxtColor", &HFFFFFF
+SaveSetting "SmileTimetable", "Code", "SpecialColor", &HFF00FF
+SaveSetting "SmileTimetable", "Code", "CommandColor", &HFF00&
+
 End Function
 
 Public Function ReflashCmdFormat()
@@ -228,11 +233,13 @@ End Select
 FrmCED.TxtCode.SelLength = 5
 Select Case FrmCED.TxtCode.SelText
 Case "clear"
-TxtCode.SelColor = &HFF00&
+FrmCED.TxtCode.SelColor = &HFF00&
 End Select
+
+
 Next
 FrmCED.TxtCode.SelLength = 0
-FrmCED.TxtCode.SelStart = Len(TxtCode.Text) + 1
+FrmCED.TxtCode.SelStart = Len(FrmCED.TxtCode.Text) + 1
 Exit Function
 77
 End Function

@@ -2,14 +2,14 @@ VERSION 5.00
 Begin VB.Form FrmMsg 
    BackColor       =   &H00FFFFFF&
    BorderStyle     =   0  'None
-   ClientHeight    =   558
+   ClientHeight    =   570
    ClientLeft      =   9828
    ClientTop       =   1290
    ClientWidth     =   5028
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   558
+   ScaleHeight     =   570
    ScaleWidth      =   5028
    ShowInTaskbar   =   0   'False
    Begin VB.Timer Tmr 

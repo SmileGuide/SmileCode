@@ -15,6 +15,10 @@ Public SknColor
 Public CvrText 'which command results the cover
 Public NumColor
 Public TxtColor
+
+Public SpcColor
+Public CmdColor
+
 Public UnDis As Boolean '±‹√‚µ›πÈÀ¿—≠ª∑
 
 
