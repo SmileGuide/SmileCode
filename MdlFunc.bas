@@ -186,10 +186,12 @@ End Function
 
 Public Function CodeThemeRead()
 SknColor = GetSetting("SmileTimetable", "Code", "BgColor")
-NumColor = GetSetting("SmileTimetable", "Code", "NumColor")
+Numcolor = GetSetting("SmileTimetable", "Code", "NumColor")
 TxtColor = GetSetting("SmileTimetable", "Code", "TxtColor")
 SpcColor = GetSetting("SmileTimetable", "Code", "SpecialColor")
 CmdColor = GetSetting("SmileTimetable", "Code", "CommandColor")
+TxtFont = GetSetting("SmileTimetable", "Code", "TxtFont")
+
 End Function
 
 Public Function CodeThemeReset()
@@ -198,10 +200,12 @@ SaveSetting "SmileTimetable", "Code", "NumColor", &HFFFF&
 SaveSetting "SmileTimetable", "Code", "TxtColor", &HFFFFFF
 SaveSetting "SmileTimetable", "Code", "SpecialColor", &HFF00FF
 SaveSetting "SmileTimetable", "Code", "CommandColor", &HFF00&
-
+SaveSetting "SmileTimetable", "Code", "ËÎÌו"
 End Function
 
 Public Function ReflashCmdFormat()
+Dim ppp
+ppp = FrmCED.TxtCode.SelStart
 On Error GoTo 77
 FrmCED.TxtCode.SelStart = 0
 FrmCED.TxtCode.SelLength = Len(FrmCED.TxtCode.Text)
@@ -219,7 +223,7 @@ FrmCED.TxtCode.SelColor = SpcColor
 Case Chr(46), Chr(59), Chr(123), Chr(125)
 FrmCED.TxtCode.SelColor = CmdColor
 Case 0 To 9
-FrmCED.TxtCode.SelColor = NumColor
+FrmCED.TxtCode.SelColor = Numcolor
 End Select
 
 
@@ -240,13 +244,37 @@ End Select
 Next
 FrmCED.TxtCode.SelLength = 0
 FrmCED.TxtCode.SelStart = Len(FrmCED.TxtCode.Text) + 1
+FrmCED.TxtCode.SelStart = ppp
 Exit Function
-77
+77 FrmCED.TxtCode.SelStart = ppp
 End Function
 
 
 
 Public Function SampleTxt()
-SampleTxt = "{" & _
-"day"
+'"59chr
+SampleTxt = "{" & "day1" & ";" & vbCrLf & "day2" & ";" & vbCrLf & "day3" & ";" & vbCrLf & "day4" & ";" & vbCrLf & "day5" & ";" & vbCrLf & "day6" & ";" & vbCrLf & "day7" & "}"
+
+FrmCED.TxtCode.Text = FrmCED.TxtCode.Text & SampleTxt
+ReflashCmdFormat
+End Function
+
+
+
+Public Function SetTheme(sBgColor As String, sNumcolor As String, sTxtColor As String, sSpecialColor As String, sCommandColor As String, sTxtFont As String)
+        SaveSetting "SmileTimetable", "Code", "BgColor", sBgColor
+        SaveSetting "SmileTimetable", "Code", "NumColor", sNumcolor
+        SaveSetting "SmileTimetable", "Code", "TxtColor", sTxtColor
+        SaveSetting "SmileTimetable", "Code", "SpecialColor", sSpecialColor
+        SaveSetting "SmileTimetable", "Code", "CommandColor", sCommandColor
+        SaveSetting "SmileTimetable", "Code", "TxtFont", sTxtFont
+        Numcolor = GetSetting("SmileTimetable", "Code", "NumColor")
+        SknColor = GetSetting("SmileTimetable", "Code", "BgColor")
+        TxtColor = GetSetting("SmileTimetable", "Code", "TxtColor")
+        SpcColor = GetSetting("SmileTimetable", "Code", "SpecialColor")
+        CmdColor = GetSetting("SmileTimetable", "Code", "CommandColor")
+        FrmCED.BackColor = SknColor
+        FrmCED.TxtCode.BackColor = SknColor
+        FrmCED.TxtCode.Font = sTxtFont
+        ReflashCmdFormat
 End Function

@@ -13,14 +13,14 @@ Public SelL As Integer
 Public Covered As Boolean
 Public SknColor
 Public CvrText 'which command results the cover
-Public NumColor
+Public Numcolor
 Public TxtColor
 
 Public SpcColor
 Public CmdColor
-
+Public TxtFont
 Public UnDis As Boolean '±‹√‚µ›πÈÀ¿—≠ª∑
-
+Public ITRef As Boolean
 
 
 
