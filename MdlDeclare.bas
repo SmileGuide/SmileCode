@@ -21,8 +21,9 @@ Public CmdColor
 Public TxtFont
 Public UnDis As Boolean '±‹√‚µ›πÈÀ¿—≠ª∑
 Public ITRef As Boolean
-
-
+Public AlText As String
+Public AllTxt As String
+Public GruDay As Variant
 
 
 

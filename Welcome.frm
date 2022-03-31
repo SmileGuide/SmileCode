@@ -33,6 +33,7 @@ Begin VB.Form FrmWel
       EndProperty
       Height          =   400
       Left            =   12960
+      Style           =   1  'Graphical
       TabIndex        =   4
       Top             =   0
       Width           =   400
@@ -318,6 +319,14 @@ End Sub
 
 Private Sub MnChangeWord_Click()
 LblWord.Caption = IEWord
+End Sub
+
+
+
+Private Sub LblWord_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Dim ReturnVal As Long
+X = ReleaseCapture()
+ReturnVal = SendMessage(Me.hwnd, WM_NCLBUTTONDOWN, HTCAPTION, 0)
 End Sub
 
 Private Sub MnChangePicture_Click()

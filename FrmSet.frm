@@ -4,7 +4,7 @@ Begin VB.Form FrmSet
    BackColor       =   &H00C0FFFF&
    BorderStyle     =   4  'Fixed ToolWindow
    Caption         =   "设置"
-   ClientHeight    =   3642
+   ClientHeight    =   5316
    ClientLeft      =   6348
    ClientTop       =   -4170
    ClientWidth     =   7224
@@ -12,7 +12,7 @@ Begin VB.Form FrmSet
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   3642
+   ScaleHeight     =   5316
    ScaleWidth      =   7224
    ShowInTaskbar   =   0   'False
    StartUpPosition =   1  '所有者中心
@@ -303,6 +303,14 @@ Begin VB.Form FrmSet
       Left            =   720
       Top             =   0
    End
+   Begin VB.Label Label1 
+      Caption         =   "api接口选择，预览"
+      Height          =   246
+      Left            =   2220
+      TabIndex        =   16
+      Top             =   3900
+      Width           =   1626
+   End
 End
 Attribute VB_Name = "FrmSet"
 Attribute VB_GlobalNameSpace = False
@@ -310,10 +318,6 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
-
-Private Sub Label1_Click()
-
-End Sub
 
 Private Sub LblGM_Click()
 

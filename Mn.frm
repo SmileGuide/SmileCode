@@ -1,5 +1,6 @@
 VERSION 5.00
 Object = "{C1A8AF28-1257-101B-8FB0-0020AF039CA3}#1.1#0"; "MCI32.OCX"
+Object = "{60CC5D62-2D08-11D0-BDBE-00AA00575603}#1.0#0"; "systray.ocx"
 Begin VB.Form FrmMn 
    BackColor       =   &H00FEFBBC&
    BorderStyle     =   3  'Fixed Dialog
@@ -16,6 +17,25 @@ Begin VB.Form FrmMn
    ScaleWidth      =   5388
    ShowInTaskbar   =   0   'False
    StartUpPosition =   1  '所有者中心
+   Begin MCI.MMControl MMControl1 
+      Height          =   546
+      Left            =   3000
+      TabIndex        =   11
+      Top             =   600
+      Width           =   1416
+      _ExtentX        =   2498
+      _ExtentY        =   963
+      _Version        =   393216
+   End
+   Begin SysTrayCtl.cSysTray CTray 
+      Left            =   3780
+      Top             =   840
+      _ExtentX        =   900
+      _ExtentY        =   900
+      InTray          =   -1  'True
+      TrayIcon        =   "Mn.frx":1084A
+      TrayTip         =   "VB 5 - SysTray Control."
+   End
    Begin VB.Timer TmrNow 
       Interval        =   500
       Left            =   4500

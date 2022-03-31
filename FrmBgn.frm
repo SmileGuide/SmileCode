@@ -48,6 +48,11 @@ Private Sub Form_Paint()
 SetWindowPos Me.hwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE Or SWP_NOSIZE
 EnMiddle Me
 
+        Dim rtn As Long
+        rtn = GetWindowLong(hwnd, GWL_EXSTYLE)
+        rtn = rtn Or Me.BackColor
+        SetWindowLong hwnd, GWL_EXSTYLE, rtn
+        SetLayeredWindowAttributes hwnd, 0, 210, LWA_ALPHA
 End Sub
 
 Private Sub Tmr_Timer()
