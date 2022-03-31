@@ -546,9 +546,9 @@ CboMC.Text = ""
 CboMC.SetFocus
 Exit Sub
 End If
-If CboLCha.Text = "输入课程" Or "" Then
+If CboLCha.Text = "输入课程" Or CboLCha.Text = "" Then
 Msg "请输入课程", &H8080FF, 500
-exitsub
+Exit Sub
 End If
 Saved = False
 CboHC.Text = Format(CboHC.Text, "00")

@@ -32,6 +32,7 @@ Begin VB.Form FrmCED
       TabIndex        =   3
       TabStop         =   0   'False
       Top             =   2820
+      Visible         =   0   'False
       Width           =   1684
    End
    Begin VB.ListBox LstTm 
@@ -53,6 +54,7 @@ Begin VB.Form FrmCED
       TabIndex        =   2
       TabStop         =   0   'False
       Top             =   2820
+      Visible         =   0   'False
       Width           =   2226
    End
    Begin VB.Timer Tmr 
@@ -79,7 +81,6 @@ Begin VB.Form FrmCED
       _ExtentX        =   1916
       _ExtentY        =   2339
       _Version        =   393217
-      Enabled         =   -1  'True
       TextRTF         =   $"FrmCED.frx":4252
    End
    Begin RichTextLib.RichTextBox TxtCode 
@@ -93,7 +94,6 @@ Begin VB.Form FrmCED
       _Version        =   393217
       BackColor       =   12648447
       BorderStyle     =   0
-      Enabled         =   -1  'True
       ScrollBars      =   3
       Appearance      =   0
       TextRTF         =   $"FrmCED.frx":42EF
@@ -505,9 +505,11 @@ ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 2, 3) = "." & vbCrLf Then
         
         
         Open App.Path & "\SmTab\" & StName & ".smtab" & recyy For Output As #1
-        
+        Dim SplTm As Variant
         For j = 0 To LstTm.ListCount - 1
-        rrrrrrrrrrWrite #1, Format(Left(LstTm.List(j), 2), "00") & ":" & Format(Right(LstTm.List(j), 2)), LstL.List(j)
+        '下句几乎写完了
+        SplTm = Split(LstTm.List(j), ":")
+        Write #1, Format(SplTm(0), "00") & ":" & Format(SplTm(1), "00"), LstL.List(j)
         Next j
         Close #1
         
@@ -537,7 +539,7 @@ ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 2, 3) = "." & vbCrLf Then
         Close #1
         
         Next recyy
-        '时间必须00:00
+
 
         
         
@@ -554,5 +556,27 @@ End If
 '''''''''''''''''''''''
 '补充命令的反馈
 'help
-'format格式套half双书签
-'cmd字体
+'cmd字号、禁止拖放
+'打开文件  文件名
+
+
+
+''''''
+'standard Description
+'{
+'Day1
+'"14:20","geography";
+'"2:30","maths";
+'"12:50","physics";
+'Day2
+'"12:50","physics";
+'Day 3
+'"14:20","geography";
+'day4
+'day5
+'day6
+'day7
+'}
+
+
+
