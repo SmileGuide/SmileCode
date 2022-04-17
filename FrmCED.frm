@@ -81,6 +81,7 @@ Begin VB.Form FrmCED
       _ExtentX        =   1916
       _ExtentY        =   2339
       _Version        =   393217
+      Enabled         =   -1  'True
       TextRTF         =   $"FrmCED.frx":4252
    End
    Begin RichTextLib.RichTextBox TxtCode 
@@ -94,6 +95,7 @@ Begin VB.Form FrmCED
       _Version        =   393217
       BackColor       =   12648447
       BorderStyle     =   0
+      Enabled         =   -1  'True
       ScrollBars      =   3
       Appearance      =   0
       TextRTF         =   $"FrmCED.frx":42EF
@@ -317,7 +319,7 @@ TxtCode.SelLength = 11
 TxtCode.SelColor = CmdColor
 TxtCode.SelStart = TxtCode.SelStart + 10
 
-ElseIf Right(LCase(TxtCode.Text), 11) = "skin-custom" Then
+ElseIf Right(LCase(TxtCode.Text), 11) = "skin-custom" Or Right(LCase(TxtCode.Text), 11) = "skin-forest" Then
 TxtCode.SelStart = TxtCode.SelStart - 10
 TxtCode.SelLength = 11
 TxtCode.SelColor = CmdColor
@@ -361,6 +363,22 @@ ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 5, 6) = "quit" & vbCrLf Then
         TxtCode.SelStart = Len(TxtCode.Text)
         TxtCode.SelLength = 0
         Covered = True
+        
+        
+ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 5, 6) = "help" & vbCrLf Then
+        Open App.Path & "\help.txt" For Input As #8
+        Dim HelpCon, HelpAdd
+        
+        Do Until EOF(8)
+        Line Input #8, HelpAdd
+        
+        HelpCon = HelpCon & HelpAdd & vbCrLf
+        Loop
+        Close #8
+        TxtCode.Text = TxtCode.Text & vbCrLf & HelpCon
+        TxtCode.SelStart = Len(TxtCode.Text)
+        
+        
         
     ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 6, 7) = "clear" & vbCrLf Then
         CvrText = "clear"

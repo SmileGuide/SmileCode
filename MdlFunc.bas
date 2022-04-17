@@ -219,8 +219,7 @@ FrmCED.TxtCode.SelLength = 1
 Select Case FrmCED.TxtCode.SelText
 Case Chr(34), Chr(44), Chr(58)
 FrmCED.TxtCode.SelColor = SpcColor
-
-Case Chr(46), Chr(59), Chr(123), Chr(125)
+Case Chr(46), Chr(59), Chr(123), Chr(125), "@", "¡¾", "¡¿", "<", ">"
 FrmCED.TxtCode.SelColor = CmdColor
 Case 0 To 9
 FrmCED.TxtCode.SelColor = Numcolor
@@ -234,12 +233,23 @@ Case "day"
 FrmCED.TxtCode.SelColor = CmdColor
 End Select
 
+FrmCED.TxtCode.SelLength = 4
+Select Case FrmCED.TxtCode.SelText
+Case "help"
+FrmCED.TxtCode.SelColor = CmdColor
+End Select
+
 FrmCED.TxtCode.SelLength = 5
 Select Case FrmCED.TxtCode.SelText
 Case "clear"
 FrmCED.TxtCode.SelColor = CmdColor
 End Select
 
+FrmCED.TxtCode.SelLength = 6
+Select Case FrmCED.TxtCode.SelText
+Case "format"
+FrmCED.TxtCode.SelColor = CmdColor
+End Select
 
 Next
 FrmCED.TxtCode.SelLength = 0
