@@ -191,6 +191,7 @@ TxtColor = GetSetting("SmileTimetable", "Code", "TxtColor")
 SpcColor = GetSetting("SmileTimetable", "Code", "SpecialColor")
 CmdColor = GetSetting("SmileTimetable", "Code", "CommandColor")
 TxtFont = GetSetting("SmileTimetable", "Code", "TxtFont")
+TxtSize = GetSetting("SmileTimetable", "Code", "FontSize")
 
 End Function
 
@@ -200,7 +201,8 @@ SaveSetting "SmileTimetable", "Code", "NumColor", &HFFFF&
 SaveSetting "SmileTimetable", "Code", "TxtColor", &HFFFFFF
 SaveSetting "SmileTimetable", "Code", "SpecialColor", &HFF00FF
 SaveSetting "SmileTimetable", "Code", "CommandColor", &HFF00&
-SaveSetting "SmileTimetable", "Code", "ËÎÌå"
+SaveSetting "SmileTimetable", "Code", "TxtFont", "ËÎÌå"
+SaveSetting "SmileTimetable", "Code", "FontSize", 24
 End Function
 
 Public Function ReflashCmdFormat()
@@ -215,17 +217,23 @@ Dim i
 For i = 0 To Len(FrmCED.TxtCode.Text) - 1
 FrmCED.TxtCode.SelStart = i
 FrmCED.TxtCode.SelLength = 1
+On Error Resume Next
 
+On Error GoTo 77
 Select Case FrmCED.TxtCode.SelText
 Case Chr(34), Chr(44), Chr(58)
 FrmCED.TxtCode.SelColor = SpcColor
-Case Chr(46), Chr(59), Chr(123), Chr(125), "@", "¡¾", "¡¿", "<", ">"
+Case Chr(46), Chr(59), Chr(123), Chr(125), "¡¾", "¡¿", "<", ">", "¡ì"
 FrmCED.TxtCode.SelColor = CmdColor
 Case 0 To 9
 FrmCED.TxtCode.SelColor = Numcolor
 End Select
 
-
+FrmCED.TxtCode.SelLength = 2
+Select Case FrmCED.TxtCode.SelText
+Case "**", "*+", "*-"
+FrmCED.TxtCode.SelColor = CmdColor
+End Select
 
 FrmCED.TxtCode.SelLength = 3
 Select Case FrmCED.TxtCode.SelText
@@ -235,7 +243,7 @@ End Select
 
 FrmCED.TxtCode.SelLength = 4
 Select Case FrmCED.TxtCode.SelText
-Case "help"
+Case "help", "quit"
 FrmCED.TxtCode.SelColor = CmdColor
 End Select
 
@@ -250,7 +258,15 @@ Select Case FrmCED.TxtCode.SelText
 Case "format"
 FrmCED.TxtCode.SelColor = CmdColor
 End Select
+If FstOpen Then
+FrmCED.TxtCode.SelLength = 51
+Select Case Replace(FrmCED.TxtCode.SelText, " ", "")
 
+Case Replace("//Coded-Editing-Form @SmileTable,S.G.G. [Vision£º" & App.Revision & "]", " ", "")
+FrmCED.TxtCode.SelColor = CmdColor
+Exit Function
+End Select
+End If
 Next
 FrmCED.TxtCode.SelLength = 0
 FrmCED.TxtCode.SelStart = Len(FrmCED.TxtCode.Text) + 1

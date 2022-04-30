@@ -95,15 +95,15 @@ Begin VB.Form FrmCED
       _Version        =   393217
       BackColor       =   12648447
       BorderStyle     =   0
-      Enabled         =   -1  'True
       ScrollBars      =   3
       Appearance      =   0
+      OLEDropMode     =   0
       TextRTF         =   $"FrmCED.frx":42EF
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "宋体"
-         Size            =   10.5
+         Name            =   "华文中宋"
+         Size            =   24
          Charset         =   134
-         Weight          =   700
+         Weight          =   400
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
@@ -132,6 +132,7 @@ Me.BackColor = SknColor
 TxtCode.BackColor = SknColor
 TxtCode.Font.Name = TxtFont
 FrmCED.Caption = "课程表高级编辑窗口：" & StName & "-" & "[未保存]"
+FstOpen = True
 Exit Sub
 
 99 CodeThemeReset
@@ -140,7 +141,15 @@ End Sub
 Private Sub Form_Paint()
 TxtCode.Width = Me.Width
 TxtCode.Height = Me.Height - 500
+If FstOpen Then
+TxtCode.Text = "//Coded-Editing-Form @SmileTable,S.G.G. [Vision：" & App.Revision & "]"
+TxtCode.SelStart = Len(TxtCode.Text)
+TxtCode.Text = TxtCode.Text & vbCrLf
+ReflashCmdFormat
+FstOpen = False
+TxtCode.SelStart = Len(TxtCode.Text)
 
+End If
 End Sub
 
 Private Sub Tmr_Timer()
@@ -149,6 +158,12 @@ Private Sub Tmr_Timer()
 End Sub
 
 Private Sub TxtCode_Change()
+Dim fstL As String
+fstL = Right(TxtCode.Text, 1)
+Debug.Print Left(TxtCode.Text, Len(TxtCode.Text) - 1)
+If Len(TxtCode.Text) > 50 Then
+If (Left(TxtCode.Text, Len(TxtCode.Text) - 3) = "//Coded-Editing-Form @SmileTable,S.G.G. [Vision：" & App.Revision & "]" And Not FstOpen) Or (Left(TxtCode.Text, Len(TxtCode.Text) - 4) = "//Coded-Editing-Form @SmileTable,S.G.G. [Vision：" & App.Revision & "]" And Not FstOpen) Then TxtCode.Text = "": TxtCode.Text = fstL: TxtCode.SelStart = 0: TxtCode.SelLength = 1: TxtCode.SelColor = TxtColor: TxtCode.SelLength = 0
+End If
 Saved = False
 If UnDis Then UnDis = False: Exit Sub
 If Covered Then
@@ -165,6 +180,7 @@ If Covered Then
             ReflashCmdFormat
             TxtCode.SelStart = Len(TxtCode.Text)
         End If
+    Covered = False
     Case "quit"
         lstWord = Right(TxtCode.Text, 3)
         If lstWord = "y" & vbCrLf Then
@@ -175,8 +191,33 @@ If Covered Then
                         ReflashCmdFormat
             TxtCode.SelStart = Len(TxtCode.Text)
         End If
+        Covered = False
+    Case "formaterror"
+            lstWord = Right(TxtCode.Text, 2)
+            If lstWord = vbCrLf Then
+            TxtCode.SelStart = Len(TxtCode.Text) - Len(CauText) - 2
+            TxtCode.SelLength = Len(CauText)
+            TxtCode.SelText = ""
+            End If
+            Covered = False
+    Case "font"
+                If Right(TxtCode.Text, 2) = vbCrLf Then
+                lstWord = Right(TxtCode.Text, 10)
+                If lstWord Like "*>>*" & vbCrLf Then
+                TxtCode.Text = TxtCvr.Text
+
+                MxFTS = Split(lstWord, ">>")
+                MxFTS(1) = Replace(MxFTS(1), vbCrLf, "")
+                TxtSize = MxFTS(1)
+                SaveSetting "SmileTimetable", "Code", "FontSize", TxtSize
+                FrmCED.TxtCode.Font.Size = TxtSize
+                ReflashCmdFormat
+                        TxtCode.SelStart = Len(TxtCode.Text)
+                End If
+                Covered = False
+                End If
     End Select
-Covered = False
+
 End If
 On Error Resume Next
 Dim p
@@ -222,6 +263,11 @@ TxtCode.SelLength = 4
 TxtCode.SelColor = CmdColor
 TxtCode.SelStart = TxtCode.SelStart + 3
 
+ElseIf Right(LCase(TxtCode.Text), 4) = "font" Then
+TxtCode.SelStart = TxtCode.SelStart - 3
+TxtCode.SelLength = 4
+TxtCode.SelColor = CmdColor
+TxtCode.SelStart = TxtCode.SelStart + 3
 
 ElseIf Right(LCase(TxtCode.Text), 6) = "format" Then
 TxtCode.SelStart = TxtCode.SelStart - 5
@@ -243,7 +289,10 @@ TxtCode.SelStart = TxtCode.SelStart + 2
                         TxtCode.SelStart = TxtCode.SelStart + 4
             ITRef = False
             SaveSetting "SmileTimetable", "Code", "ReflashFormatWhenCrlf", ITRef
-
+TxtCode.SelStart = 0
+TxtCode.SelLength = Len(TxtCode.Text)
+TxtCode.SelColor = TxtColor
+TxtCode.SelStart = Len(TxtCode.Text)
 ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart, 3) = "*+" Then
     TxtCode.SelStart = TxtCode.SelStart - 2
 TxtCode.SelLength = 4
@@ -365,6 +414,19 @@ ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 5, 6) = "quit" & vbCrLf Then
         Covered = True
         
         
+ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 5, 6) = "font" & vbCrLf Then
+        CvrText = "font"
+        UnDis = False
+        TxtCvr.Text = TxtCode.Text
+        TxtCvr.Text = Left(TxtCvr.Text, Len(TxtCvr.Text) - 6)
+
+        UnDis = True
+        
+        CauText = "请输入要设置的字号。>>"
+        TxtCode.Text = TxtCode.Text & vbCrLf & CauText
+        ReflashCmdFormat
+        Covered = True
+        TxtCode.SelStart = Len(TxtCode.Text)
 ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 5, 6) = "help" & vbCrLf Then
         Open App.Path & "\help.txt" For Input As #8
         Dim HelpCon, HelpAdd
@@ -376,6 +438,7 @@ ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 5, 6) = "help" & vbCrLf Then
         Loop
         Close #8
         TxtCode.Text = TxtCode.Text & vbCrLf & HelpCon
+                TxtCode.SelColor = TxtColor
         TxtCode.SelStart = Len(TxtCode.Text)
         
         
@@ -467,7 +530,8 @@ ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 20, 21) = "skin-custom-settin
         
 ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 2, 3) = "." & vbCrLf Then
         ''''''''''''''''''''''''保存
-
+        On Error GoTo SynFail
+        FrmCED.Caption = "课程表高级编辑窗口：" & StName & "-" & "[已保存]"
         AllTxt = TxtCode.Text
         AllTxt = Replace(AllTxt, vbCrLf, "")
         AllTxt = Replace(AllTxt, Chr(10), "")
@@ -568,7 +632,20 @@ End If
     End If
     End If
     Exit Sub
-
+SynFail:        CauText = "错误：对该代码的语法审查不合格，无法保存为课程表。" & vbCrLf & "      若要将该代码以文本文档形式存储到桌面，请使用preview命令。" & vbCrLf & "      使用help命令获取更多帮助。" & Chr(10) & "请按回车键表示确定。>>"
+        TxtCode.Text = TxtCode.Text & vbCrLf & CauText
+        ReflashCmdFormat
+        TxtCode.SelStart = Len(TxtCode.Text) - Len(CauText)
+        TxtCode.SelLength = Len(CauText)
+        TxtCode.SelColor = TxtColor
+        TxtCode.SelLength = 0
+        TxtCode.SelStart = Len(TxtCode.Text) - Len(CauText)
+        TxtCode.SelLength = Len(CauText) - 74
+        TxtCode.SelColor = vbRed
+        TxtCode.SelStart = Len(TxtCode.Text)
+        TxtCode.SelLength = 0
+        Covered = True
+        CvrText = "formaterror"
 999 End Sub
 
 '''''''''''''''''''''''
@@ -598,3 +675,6 @@ End If
 
 
 
+Private Sub TxtCode_GotFocus()
+
+End Sub

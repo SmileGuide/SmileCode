@@ -24,7 +24,9 @@ Public ITRef As Boolean
 Public AlText As String
 Public AllTxt As String
 Public GruDay As Variant
-
+Public FstOpen As Boolean
+Public MxFTS As Variant
+Public TxtSize As String
 
 
 
