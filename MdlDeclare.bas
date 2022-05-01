@@ -15,7 +15,7 @@ Public SknColor
 Public CvrText 'which command results the cover
 Public Numcolor
 Public TxtColor
-
+Public UsSed As Boolean
 Public SpcColor
 Public CmdColor
 Public TxtFont
@@ -27,10 +27,11 @@ Public GruDay As Variant
 Public FstOpen As Boolean
 Public MxFTS As Variant
 Public TxtSize As String
+Public FontC As Boolean
 
 
 
-
+Public Declare Sub keybd_event Lib "user32" (ByVal bVk As Byte, ByVal bScan As Byte, ByVal dwFlags As Long, ByVal dwExtraInfo As Long)
 
 
 

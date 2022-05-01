@@ -203,76 +203,109 @@ SaveSetting "SmileTimetable", "Code", "SpecialColor", &HFF00FF
 SaveSetting "SmileTimetable", "Code", "CommandColor", &HFF00&
 SaveSetting "SmileTimetable", "Code", "TxtFont", "ËÎÌå"
 SaveSetting "SmileTimetable", "Code", "FontSize", 24
+SaveSetting "SmileTimetable", "Code", "ReflashFormatWhenCrlf", True
+ITRef = True
 End Function
 
-Public Function ReflashCmdFormat()
+Public Function ReflashCmdFormat(RTFBox As RichTextBox)
 Dim ppp
-ppp = FrmCED.TxtCode.SelStart
+ppp = RTFBox.SelStart
 On Error GoTo 77
-FrmCED.TxtCode.SelStart = 0
-FrmCED.TxtCode.SelLength = Len(FrmCED.TxtCode.Text)
-FrmCED.TxtCode.SelColor = TxtColor
-
+RTFBox.SelStart = 0
+RTFBox.SelLength = Len(RTFBox.Text)
+RTFBox.SelColor = TxtColor
+Dim Rp As String
+If FontC Then
+Rp = FrmCED.TxtCode.Text
+FrmCED.TxtCode.Text = ""
+FrmCED.TxtCode.Text = Rp
+FontC = False
+End If
 Dim i
-For i = 0 To Len(FrmCED.TxtCode.Text) - 1
-FrmCED.TxtCode.SelStart = i
-FrmCED.TxtCode.SelLength = 1
+For i = 0 To Len(RTFBox.Text) - 1
+RTFBox.SelStart = i
+RTFBox.SelLength = 1
 On Error Resume Next
 
 On Error GoTo 77
-Select Case FrmCED.TxtCode.SelText
-Case Chr(34), Chr(44), Chr(58)
-FrmCED.TxtCode.SelColor = SpcColor
+Select Case RTFBox.SelText
+Case Chr(34), Chr(44), Chr(58), "-", ",", "/", "!", "&", "(", ")", "|", "\", "@", "#", "$", "%", "^", "+", "¡¸", "¡¹"
+RTFBox.SelColor = SpcColor
 Case Chr(46), Chr(59), Chr(123), Chr(125), "¡¾", "¡¿", "<", ">", "¡ì"
-FrmCED.TxtCode.SelColor = CmdColor
+RTFBox.SelColor = CmdColor
 Case 0 To 9
-FrmCED.TxtCode.SelColor = Numcolor
+RTFBox.SelColor = Numcolor
 End Select
 
-FrmCED.TxtCode.SelLength = 2
-Select Case FrmCED.TxtCode.SelText
+RTFBox.SelLength = 2
+Select Case RTFBox.SelText
 Case "**", "*+", "*-"
-FrmCED.TxtCode.SelColor = CmdColor
+RTFBox.SelColor = CmdColor
 End Select
 
-FrmCED.TxtCode.SelLength = 3
-Select Case FrmCED.TxtCode.SelText
+RTFBox.SelLength = 3
+Select Case LCase(RTFBox.SelText)
 Case "day"
-FrmCED.TxtCode.SelColor = CmdColor
+RTFBox.SelColor = CmdColor
 End Select
 
-FrmCED.TxtCode.SelLength = 4
-Select Case FrmCED.TxtCode.SelText
+RTFBox.SelLength = 4
+Select Case LCase(RTFBox.SelText)
 Case "help", "quit"
-FrmCED.TxtCode.SelColor = CmdColor
+RTFBox.SelColor = CmdColor
 End Select
 
-FrmCED.TxtCode.SelLength = 5
-Select Case FrmCED.TxtCode.SelText
+RTFBox.SelLength = 5
+Select Case LCase(RTFBox.SelText)
 Case "clear"
-FrmCED.TxtCode.SelColor = CmdColor
+RTFBox.SelColor = CmdColor
 End Select
 
-FrmCED.TxtCode.SelLength = 6
-Select Case FrmCED.TxtCode.SelText
+RTFBox.SelLength = 6
+Select Case LCase(RTFBox.SelText)
 Case "format"
-FrmCED.TxtCode.SelColor = CmdColor
+RTFBox.SelColor = CmdColor
 End Select
-If FstOpen Then
-FrmCED.TxtCode.SelLength = 51
-Select Case Replace(FrmCED.TxtCode.SelText, " ", "")
 
-Case Replace("//Coded-Editing-Form @SmileTable,S.G.G. [Vision£º" & App.Revision & "]", " ", "")
-FrmCED.TxtCode.SelColor = CmdColor
-Exit Function
+RTFBox.SelLength = 9
+Select Case LCase(RTFBox.SelText)
+Case "skin-dark"
+RTFBox.SelColor = CmdColor
 End Select
-End If
+
+RTFBox.SelLength = 10
+Select Case LCase(RTFBox.SelText)
+Case "screenshot"
+RTFBox.SelColor = CmdColor
+End Select
+
+RTFBox.SelLength = 11
+Select Case LCase(RTFBox.SelText)
+Case "skin-bright", "skin-forest", "skin-custom"
+RTFBox.SelColor = CmdColor
+End Select
+
+RTFBox.SelLength = 12
+Select Case LCase(RTFBox.SelText)
+Case "save-as-text"
+RTFBox.SelColor = CmdColor
+End Select
+
+RTFBox.SelLength = 11
+Select Case LCase(RTFBox.SelText)
+Case "save-as-rtf"
+RTFBox.SelColor = CmdColor
+End Select
+
 Next
-FrmCED.TxtCode.SelLength = 0
-FrmCED.TxtCode.SelStart = Len(FrmCED.TxtCode.Text) + 1
-FrmCED.TxtCode.SelStart = ppp
+RTFBox.SelLength = 0
+RTFBox.SelStart = Len(RTFBox.Text) + 1
+RTFBox.SelStart = ppp
+
+
+
 Exit Function
-77 FrmCED.TxtCode.SelStart = ppp
+77 RTFBox.SelStart = ppp
 End Function
 
 
@@ -282,7 +315,7 @@ Public Function SampleTxt()
 SampleTxt = "{" & "day1" & ";" & vbCrLf & "day2" & ";" & vbCrLf & "day3" & ";" & vbCrLf & "day4" & ";" & vbCrLf & "day5" & ";" & vbCrLf & "day6" & ";" & vbCrLf & "day7" & "}"
 
 FrmCED.TxtCode.Text = FrmCED.TxtCode.Text & SampleTxt
-ReflashCmdFormat
+        If ITRef Then ReflashCmdFormat FrmCED.TxtCode Else EnWhite
 End Function
 
 
@@ -302,5 +335,14 @@ Public Function SetTheme(sBgColor As String, sNumcolor As String, sTxtColor As S
         FrmCED.BackColor = SknColor
         FrmCED.TxtCode.BackColor = SknColor
         FrmCED.TxtCode.Font = sTxtFont
-        ReflashCmdFormat
+        ReflashCmdFormat FrmCED.TxtCode
+End Function
+
+Public Function EnWhite()
+
+FrmCED.TxtCode.SelStart = 0
+FrmCED.TxtCode.SelLength = Len(FrmCED.TxtCode.Text)
+FrmCED.TxtCode.SelColor = TxtColor
+                FrmCED.TxtCode.SelLength = 0
+        FrmCED.TxtCode.SelStart = Len(FrmCED.TxtCode.Text)
 End Function
