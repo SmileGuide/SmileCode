@@ -229,7 +229,11 @@ On Error Resume Next
 
 On Error GoTo 77
 Select Case RTFBox.SelText
+<<<<<<< HEAD
 Case Chr(34), Chr(44), Chr(58), "-", ",", "/", "!", "&", "(", ")", "|", "\", "@", "#", "$", "%", "^", "+", "¡¸", "¡¹", "¡¢"
+=======
+Case Chr(34), Chr(44), Chr(58), "-", ",", "/", "!", "&", "(", ")", "|", "\", "@", "#", "$", "%", "^", "+", "¡¸", "¡¹"
+>>>>>>> 71a01805a4f028ffd1952374504c537763eb0432
 RTFBox.SelColor = SpcColor
 Case Chr(46), Chr(59), Chr(123), Chr(125), "¡¾", "¡¿", "<", ">", "¡ì"
 RTFBox.SelColor = CmdColor
@@ -244,19 +248,27 @@ RTFBox.SelColor = CmdColor
 End Select
 
 RTFBox.SelLength = 3
+<<<<<<< HEAD
 Select Case RTFBox.SelText
+=======
+Select Case LCase(RTFBox.SelText)
+>>>>>>> 71a01805a4f028ffd1952374504c537763eb0432
 Case "day"
 RTFBox.SelColor = CmdColor
 End Select
 
 RTFBox.SelLength = 4
 Select Case LCase(RTFBox.SelText)
+<<<<<<< HEAD
 Case "help", "quit", "none"
 RTFBox.SelColor = CmdColor
 End Select
 
 Select Case RTFBox.SelText
 Case "none"
+=======
+Case "help", "quit"
+>>>>>>> 71a01805a4f028ffd1952374504c537763eb0432
 RTFBox.SelColor = CmdColor
 End Select
 
@@ -310,8 +322,12 @@ RTFBox.SelStart = ppp
 
 
 Exit Function
+<<<<<<< HEAD
 77 Debug.Print Err.Description
 RTFBox.SelStart = ppp
+=======
+77 RTFBox.SelStart = ppp
+>>>>>>> 71a01805a4f028ffd1952374504c537763eb0432
 End Function
 
 
@@ -352,6 +368,7 @@ FrmCED.TxtCode.SelColor = TxtColor
                 FrmCED.TxtCode.SelLength = 0
         FrmCED.TxtCode.SelStart = Len(FrmCED.TxtCode.Text)
 End Function
+<<<<<<< HEAD
 
 Public Function EgTxt()
 Open App.Path & "\example.txt" For Input As #11
@@ -365,3 +382,5 @@ Dim EgCon, EgAdd
 Close #11
 FrmCED.TxtCode.Text = FrmCED.TxtCode.Text & vbCrLf & EgCon
 End Function
+=======
+>>>>>>> 71a01805a4f028ffd1952374504c537763eb0432

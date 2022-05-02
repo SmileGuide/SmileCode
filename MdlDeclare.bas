@@ -28,7 +28,11 @@ Public FstOpen As Boolean
 Public MxFTS As Variant
 Public TxtSize As String
 Public FontC As Boolean
+<<<<<<< HEAD
 Public StStart, StStop, rec
+=======
+
+>>>>>>> 71a01805a4f028ffd1952374504c537763eb0432
 
 
 Public Declare Sub keybd_event Lib "user32" (ByVal bVk As Byte, ByVal bScan As Byte, ByVal dwFlags As Long, ByVal dwExtraInfo As Long)
