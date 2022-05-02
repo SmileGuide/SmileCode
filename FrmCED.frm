@@ -153,7 +153,15 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+
+=======
+Option Explicit
+>>>>>>> 71a01805a4f028ffd1952374504c537763eb0432
+>>>>>>> 7072871de9e4dcdcd781db23014164a14c779b05
 Dim LastPsn
 Dim CRLFED
 Dim CauText As String
@@ -163,7 +171,14 @@ Dim CauText As String
 
 
 Private Sub Form_Load()
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+
+=======
+>>>>>>> 71a01805a4f028ffd1952374504c537763eb0432
+>>>>>>> 7072871de9e4dcdcd781db23014164a14c779b05
 CodeThemeRead
 StName = "testing"
 On Error GoTo 99
@@ -174,7 +189,14 @@ TxtCode.Font.Size = TxtSize
 FrmCED.Caption = "课程表高级编辑窗口：" & StName & "-" & "[未保存]"
 FstOpen = True
 ITRef = GetSetting("SmileTimetable", "Code", "ReflashFormatWhenCrlf")
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+
+=======
+>>>>>>> 71a01805a4f028ffd1952374504c537763eb0432
+>>>>>>> 7072871de9e4dcdcd781db23014164a14c779b05
 Exit Sub
 
 99 CodeThemeReset
@@ -190,6 +212,13 @@ TxtCode.Text = TxtCode.Text & vbCrLf
         If ITRef Then ReflashCmdFormat TxtCode
 FstOpen = False
 TxtCode.SelStart = Len(TxtCode.Text)
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+
+>>>>>>> 71a01805a4f028ffd1952374504c537763eb0432
+>>>>>>> 7072871de9e4dcdcd781db23014164a14c779b05
 End If
 End Sub
 
@@ -241,10 +270,20 @@ Private Sub Tmr_Timer()
 End Sub
 
 Private Sub TxtCode_Change()
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 7072871de9e4dcdcd781db23014164a14c779b05
 
 
 On Error Resume Next
 Debug.Print Right(LCase(TxtCode.Text), 2)
+<<<<<<< HEAD
+=======
+=======
+On Error Resume Next
+>>>>>>> 71a01805a4f028ffd1952374504c537763eb0432
+>>>>>>> 7072871de9e4dcdcd781db23014164a14c779b05
 Dim fstL As String
 fstL = Right(TxtCode.Text, 1)
 Debug.Print Left(TxtCode.Text, Len(TxtCode.Text) - 1)
@@ -352,15 +391,77 @@ TxtCode.SelColor = TxtColor
 
 
 
+<<<<<<< HEAD
 
 
 If Right(LCase(TxtCode.Text), 1) = "." Then
+=======
+<<<<<<< HEAD
+
+
+If Right(LCase(TxtCode.Text), 1) = "." Then
+=======
+If Right(LCase(TxtCode.Text), 5) = "clear" Then
+TxtCode.SelStart = TxtCode.SelStart - 4
+TxtCode.SelLength = 5
+TxtCode.SelColor = CmdColor
+TxtCode.SelStart = TxtCode.SelStart + 4
+
+ElseIf Right(LCase(TxtCode.Text), 1) = "." Then
+>>>>>>> 71a01805a4f028ffd1952374504c537763eb0432
+>>>>>>> 7072871de9e4dcdcd781db23014164a14c779b05
 TxtCode.SelStart = TxtCode.SelStart
 TxtCode.SelLength = 1
 TxtCode.SelColor = CmdColor
 TxtCode.SelStart = TxtCode.SelStart
 
+<<<<<<< HEAD
 ElseIf Right(LCase(TxtCode.Text), 2) = "*-" Then
+=======
+<<<<<<< HEAD
+ElseIf Right(LCase(TxtCode.Text), 2) = "*-" Then
+=======
+ElseIf Right(LCase(TxtCode.Text), 4) = "quit" Then
+TxtCode.SelStart = TxtCode.SelStart - 3
+TxtCode.SelLength = 4
+TxtCode.SelColor = CmdColor
+TxtCode.SelStart = TxtCode.SelStart + 3
+
+ElseIf Right(LCase(TxtCode.Text), 4) = "help" Then
+TxtCode.SelStart = TxtCode.SelStart - 3
+TxtCode.SelLength = 4
+TxtCode.SelColor = CmdColor
+TxtCode.SelStart = TxtCode.SelStart + 3
+
+ElseIf Right(LCase(TxtCode.Text), 4) = "font" Then
+TxtCode.SelStart = TxtCode.SelStart - 3
+TxtCode.SelLength = 4
+TxtCode.SelColor = CmdColor
+TxtCode.SelStart = TxtCode.SelStart + 3
+
+ElseIf Right(LCase(TxtCode.Text), 6) = "format" Then
+TxtCode.SelStart = TxtCode.SelStart - 5
+TxtCode.SelLength = 6
+TxtCode.SelColor = CmdColor
+TxtCode.SelStart = TxtCode.SelStart + 5
+
+ElseIf Right(LCase(TxtCode.Text), 10) = "screenshot" Then
+TxtCode.SelStart = TxtCode.SelStart - 9
+TxtCode.SelLength = 10
+TxtCode.SelColor = CmdColor
+TxtCode.SelStart = TxtCode.SelStart + 9
+
+
+ElseIf Right(LCase(TxtCode.Text), 11) = "save-as-rtf" Then
+TxtCode.SelStart = TxtCode.SelStart - 10
+TxtCode.SelLength = 11
+TxtCode.SelColor = CmdColor
+TxtCode.SelStart = TxtCode.SelStart + 10
+
+
+ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart, 3) = "*-" Then
+>>>>>>> 71a01805a4f028ffd1952374504c537763eb0432
+>>>>>>> 7072871de9e4dcdcd781db23014164a14c779b05
 
 TxtCode.Text = Left(TxtCode.Text, Len(TxtCode.Text) - 2)
 TxtCode.SelStart = Len(TxtCode.Text)
@@ -371,7 +472,15 @@ TxtCode.SelStart = 0
 TxtCode.SelLength = Len(TxtCode.Text)
 TxtCode.SelColor = TxtColor
 TxtCode.SelStart = Len(TxtCode.Text)
+<<<<<<< HEAD
 ElseIf Right(LCase(TxtCode.Text), 2) = "*+" Then
+=======
+<<<<<<< HEAD
+ElseIf Right(LCase(TxtCode.Text), 2) = "*+" Then
+=======
+ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart, 3) = "*+" Then
+>>>>>>> 71a01805a4f028ffd1952374504c537763eb0432
+>>>>>>> 7072871de9e4dcdcd781db23014164a14c779b05
 TxtCode.Text = Left(TxtCode.Text, Len(TxtCode.Text) - 2)
 TxtCode.SelStart = Len(TxtCode.Text)
 
@@ -380,7 +489,15 @@ TxtCode.SelStart = Len(TxtCode.Text)
          ReflashCmdFormat TxtCode
 
 
+<<<<<<< HEAD
 ElseIf Right(LCase(TxtCode.Text), 2) = "**" Then
+=======
+<<<<<<< HEAD
+ElseIf Right(LCase(TxtCode.Text), 2) = "**" Then
+=======
+ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart, 2) = "**" Then
+>>>>>>> 71a01805a4f028ffd1952374504c537763eb0432
+>>>>>>> 7072871de9e4dcdcd781db23014164a14c779b05
 TxtCode.Text = Left(TxtCode.Text, Len(TxtCode.Text) - 2)
 
       ReflashCmdFormat TxtCode
@@ -426,6 +543,10 @@ TxtCode.Text = Left(TxtCode.Text, Len(TxtCode.Text) - 2)
 '        FrmCED.TxtCode.SelLength = 0
 '        TxtCode.SelStart = pp
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 7072871de9e4dcdcd781db23014164a14c779b05
 ElseIf Right(LCase(TxtCode.Text), 5) = "clear" Then
 TxtCode.SelStart = TxtCode.SelStart - 4
 TxtCode.SelLength = 5
@@ -461,6 +582,15 @@ TxtCode.SelStart = TxtCode.SelStart - 6
 TxtCode.SelLength = 7
 TxtCode.SelColor = CmdColor
 TxtCode.SelStart = TxtCode.SelStart + 6
+<<<<<<< HEAD
+=======
+=======
+77 ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart + 1, 1) = "*" Then
+TxtCode.SelLength = 1
+TxtCode.SelColor = CmdColor
+TxtCode.SelStart = TxtCode.SelStart + 1
+>>>>>>> 71a01805a4f028ffd1952374504c537763eb0432
+>>>>>>> 7072871de9e4dcdcd781db23014164a14c779b05
 
 ElseIf Right(LCase(TxtCode.Text), 9) = "skin-dark" Then
 TxtCode.SelStart = TxtCode.SelStart - 8
@@ -468,6 +598,10 @@ TxtCode.SelLength = 9
 TxtCode.SelColor = CmdColor
 TxtCode.SelStart = TxtCode.SelStart + 8
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 7072871de9e4dcdcd781db23014164a14c779b05
 ElseIf Right(LCase(TxtCode.Text), 10) = "screenshot" Then
 TxtCode.SelStart = TxtCode.SelStart - 9
 TxtCode.SelLength = 10
@@ -491,6 +625,11 @@ TxtCode.SelStart = TxtCode.SelStart + 1
 
 
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 71a01805a4f028ffd1952374504c537763eb0432
+>>>>>>> 7072871de9e4dcdcd781db23014164a14c779b05
 ElseIf Right(LCase(TxtCode.Text), 11) = "skin-bright" Then
 TxtCode.SelStart = TxtCode.SelStart - 10
 TxtCode.SelLength = 11
@@ -640,6 +779,10 @@ ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 7, 8) = "format" & vbCrLf The
         TxtCode.SelStart = TxtCode.SelStart + 8
         SampleTxt
         TxtCode.SelStart = Len(TxtCode.Text)
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 7072871de9e4dcdcd781db23014164a14c779b05
         
 ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 8, 9) = "example" & vbCrLf Then
             TxtCode.SelStart = TxtCode.SelStart - 9
@@ -687,6 +830,11 @@ ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 8, 9) = "preview" & vbCrLf Th
         TxtCode.SelText = ""
         TxtCode.SelStart = TxtCode.SelStart + 11
         SetTheme &HC0C0C, &HFFFF&, vbWhite, &HFF00FF, &HFF00&, "宋体"
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 71a01805a4f028ffd1952374504c537763eb0432
+>>>>>>> 7072871de9e4dcdcd781db23014164a14c779b05
 
 ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 11, 12) = "screenshot" & vbCrLf Then
 Scr
@@ -695,7 +843,20 @@ Scr
 
 
        
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+
+=======
+    ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 10, 11) = "skin-dark" & vbCrLf Then
+        TxtCode.SelStart = TxtCode.SelStart - 11
+        TxtCode.SelLength = 11
+        TxtCode.SelText = ""
+        TxtCode.SelStart = TxtCode.SelStart + 11
+        SetTheme &HC0C0C, &HFFFF&, vbWhite, &HFF00FF, &HFF00&, "宋体"
+>>>>>>> 71a01805a4f028ffd1952374504c537763eb0432
+>>>>>>> 7072871de9e4dcdcd781db23014164a14c779b05
 ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 12, 13) = "skin-bright" & vbCrLf Then
         TxtCode.SelStart = TxtCode.SelStart - 13
         TxtCode.SelLength = 13
@@ -751,13 +912,25 @@ ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 2, 3) = "." & vbCrLf Then
         AllTxt = Replace(AllTxt, vbCrLf, "")
         AllTxt = Replace(AllTxt, Chr(10), "")
 
+<<<<<<< HEAD
         
+=======
+<<<<<<< HEAD
+        
+=======
+        Dim StStart, StStop, rec
+>>>>>>> 71a01805a4f028ffd1952374504c537763eb0432
+>>>>>>> 7072871de9e4dcdcd781db23014164a14c779b05
         For rec = 1 To Len(AllTxt)
         If Mid(AllTxt, rec, 1) = "{" Then StStart = rec
         If Mid(AllTxt, rec, 1) = "}" Then StStop = rec
         Next
         AllTxt = Mid(AllTxt, StStart + 1, StStop - StStart - 1) '去{}
         AllTxt = Replace(AllTxt, " ", "")
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 7072871de9e4dcdcd781db23014164a14c779b05
         Dim DeM
         For DeM = 0 To 9
         AllTxt = Replace(AllTxt, "day" & DeM, "\")
@@ -765,6 +938,17 @@ ElseIf Mid(LCase(TxtCode.Text), TxtCode.SelStart - 2, 3) = "." & vbCrLf Then
         GruDay = Split(AllTxt, "\")
         Next
                 AllTxt = Replace(AlText, "none", "")
+<<<<<<< HEAD
+=======
+=======
+        AllTxt = LCase(AllTxt)
+        Dim DeM
+        For DeM = 0 To 9
+        AllTxt = Replace(AllTxt, "day" & DeM, "\")
+        GruDay = Split(AllTxt, "\")
+        Next
+>>>>>>> 71a01805a4f028ffd1952374504c537763eb0432
+>>>>>>> 7072871de9e4dcdcd781db23014164a14c779b05
         Dim ADCF
         For ADCF = 0 To UBound(GruDay)
         GruDay(ADCF) = Replace(GruDay(ADCF), ";", vbCrLf)

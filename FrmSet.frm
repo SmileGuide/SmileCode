@@ -4,7 +4,15 @@ Begin VB.Form FrmSet
    BackColor       =   &H00C0FFFF&
    BorderStyle     =   4  'Fixed ToolWindow
    Caption         =   "设置"
+<<<<<<< HEAD
    ClientHeight    =   7440
+=======
+<<<<<<< HEAD
+   ClientHeight    =   7440
+=======
+   ClientHeight    =   5316
+>>>>>>> 71a01805a4f028ffd1952374504c537763eb0432
+>>>>>>> 7072871de9e4dcdcd781db23014164a14c779b05
    ClientLeft      =   6348
    ClientTop       =   -4170
    ClientWidth     =   7224
@@ -12,6 +20,10 @@ Begin VB.Form FrmSet
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 7072871de9e4dcdcd781db23014164a14c779b05
    ScaleHeight     =   7440
    ScaleWidth      =   7224
    ShowInTaskbar   =   0   'False
@@ -68,6 +80,15 @@ Begin VB.Form FrmSet
          Width           =   1206
       End
    End
+<<<<<<< HEAD
+=======
+=======
+   ScaleHeight     =   5316
+   ScaleWidth      =   7224
+   ShowInTaskbar   =   0   'False
+   StartUpPosition =   1  '所有者中心
+>>>>>>> 71a01805a4f028ffd1952374504c537763eb0432
+>>>>>>> 7072871de9e4dcdcd781db23014164a14c779b05
    Begin MSComDlg.CommonDialog CDFL 
       Left            =   2280
       Top             =   0
@@ -120,7 +141,14 @@ Begin VB.Form FrmSet
                Italic          =   0   'False
                Strikethrough   =   0   'False
             EndProperty
+<<<<<<< HEAD
             ForeColor       =   &H0000FF00&
+=======
+<<<<<<< HEAD
+            ForeColor       =   &H0000FF00&
+=======
+>>>>>>> 71a01805a4f028ffd1952374504c537763eb0432
+>>>>>>> 7072871de9e4dcdcd781db23014164a14c779b05
             Height          =   282
             Left            =   660
             TabIndex        =   15
@@ -132,7 +160,15 @@ Begin VB.Form FrmSet
             BackColor       =   &H00C0FFFF&
             BackStyle       =   0  'Transparent
             BorderStyle     =   1  'Fixed Single
+<<<<<<< HEAD
             Caption         =   "标点颜色"
+=======
+<<<<<<< HEAD
+            Caption         =   "标点颜色"
+=======
+            Caption         =   "特殊符号颜色"
+>>>>>>> 71a01805a4f028ffd1952374504c537763eb0432
+>>>>>>> 7072871de9e4dcdcd781db23014164a14c779b05
             BeginProperty Font 
                Name            =   "华文宋体"
                Size            =   10.5
@@ -142,7 +178,14 @@ Begin VB.Form FrmSet
                Italic          =   0   'False
                Strikethrough   =   0   'False
             EndProperty
+<<<<<<< HEAD
             ForeColor       =   &H00FF00FF&
+=======
+<<<<<<< HEAD
+            ForeColor       =   &H00FF00FF&
+=======
+>>>>>>> 71a01805a4f028ffd1952374504c537763eb0432
+>>>>>>> 7072871de9e4dcdcd781db23014164a14c779b05
             Height          =   282
             Left            =   660
             TabIndex        =   14
@@ -164,7 +207,14 @@ Begin VB.Form FrmSet
                Italic          =   0   'False
                Strikethrough   =   0   'False
             EndProperty
+<<<<<<< HEAD
             ForeColor       =   &H0080FFFF&
+=======
+<<<<<<< HEAD
+            ForeColor       =   &H0080FFFF&
+=======
+>>>>>>> 71a01805a4f028ffd1952374504c537763eb0432
+>>>>>>> 7072871de9e4dcdcd781db23014164a14c779b05
             Height          =   282
             Left            =   660
             TabIndex        =   13
@@ -186,7 +236,14 @@ Begin VB.Form FrmSet
                Italic          =   0   'False
                Strikethrough   =   0   'False
             EndProperty
+<<<<<<< HEAD
             ForeColor       =   &H00FFFFFF&
+=======
+<<<<<<< HEAD
+            ForeColor       =   &H00FFFFFF&
+=======
+>>>>>>> 71a01805a4f028ffd1952374504c537763eb0432
+>>>>>>> 7072871de9e4dcdcd781db23014164a14c779b05
             Height          =   282
             Left            =   660
             TabIndex        =   12
@@ -195,7 +252,15 @@ Begin VB.Form FrmSet
          End
          Begin VB.Label LblCG 
             Alignment       =   2  'Center
+<<<<<<< HEAD
             BackColor       =   &H000C0C0C&
+=======
+<<<<<<< HEAD
+            BackColor       =   &H000C0C0C&
+=======
+            BackColor       =   &H00C0FFFF&
+>>>>>>> 71a01805a4f028ffd1952374504c537763eb0432
+>>>>>>> 7072871de9e4dcdcd781db23014164a14c779b05
             BorderStyle     =   1  'Fixed Single
             Caption         =   "（背景颜色）"
             BeginProperty Font 
@@ -207,7 +272,14 @@ Begin VB.Form FrmSet
                Italic          =   0   'False
                Strikethrough   =   0   'False
             EndProperty
+<<<<<<< HEAD
             ForeColor       =   &H00FFFFFF&
+=======
+<<<<<<< HEAD
+            ForeColor       =   &H00FFFFFF&
+=======
+>>>>>>> 71a01805a4f028ffd1952374504c537763eb0432
+>>>>>>> 7072871de9e4dcdcd781db23014164a14c779b05
             Height          =   1782
             Left            =   60
             TabIndex        =   11
@@ -225,9 +297,21 @@ Begin VB.Form FrmSet
          Width           =   3066
          Begin VB.Label LblGMenu 
             Alignment       =   2  'Center
+<<<<<<< HEAD
             BackColor       =   &H000DA3FD&
             BorderStyle     =   1  'Fixed Single
             Caption         =   "补充色调"
+=======
+<<<<<<< HEAD
+            BackColor       =   &H000DA3FD&
+            BorderStyle     =   1  'Fixed Single
+            Caption         =   "补充色调"
+=======
+            BackColor       =   &H00C0FFFF&
+            BorderStyle     =   1  'Fixed Single
+            Caption         =   "菜单色调"
+>>>>>>> 71a01805a4f028ffd1952374504c537763eb0432
+>>>>>>> 7072871de9e4dcdcd781db23014164a14c779b05
             BeginProperty Font 
                Name            =   "华文中宋"
                Size            =   10.5
@@ -245,7 +329,15 @@ Begin VB.Form FrmSet
          End
          Begin VB.Label LblGS 
             Alignment       =   2  'Center
+<<<<<<< HEAD
             BackColor       =   &H00FDEEBF&
+=======
+<<<<<<< HEAD
+            BackColor       =   &H00FDEEBF&
+=======
+            BackColor       =   &H00C0FFFF&
+>>>>>>> 71a01805a4f028ffd1952374504c537763eb0432
+>>>>>>> 7072871de9e4dcdcd781db23014164a14c779b05
             BorderStyle     =   1  'Fixed Single
             Caption         =   "陪衬色调"
             BeginProperty Font 
@@ -265,7 +357,15 @@ Begin VB.Form FrmSet
          End
          Begin VB.Label LblGD 
             Alignment       =   2  'Center
+<<<<<<< HEAD
             BackColor       =   &H0080FFFF&
+=======
+<<<<<<< HEAD
+            BackColor       =   &H0080FFFF&
+=======
+            BackColor       =   &H00C0FFFF&
+>>>>>>> 71a01805a4f028ffd1952374504c537763eb0432
+>>>>>>> 7072871de9e4dcdcd781db23014164a14c779b05
             BorderStyle     =   1  'Fixed Single
             Caption         =   "加强主色调"
             BeginProperty Font 
@@ -360,6 +460,20 @@ Begin VB.Form FrmSet
       Left            =   720
       Top             =   0
    End
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+   Begin VB.Label Label1 
+      Caption         =   "api接口选择，预览"
+      Height          =   246
+      Left            =   2220
+      TabIndex        =   16
+      Top             =   3900
+      Width           =   1626
+   End
+>>>>>>> 71a01805a4f028ffd1952374504c537763eb0432
+>>>>>>> 7072871de9e4dcdcd781db23014164a14c779b05
 End
 Attribute VB_Name = "FrmSet"
 Attribute VB_GlobalNameSpace = False
@@ -372,6 +486,10 @@ Private Sub LblGM_Click()
 
 End Sub
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 7072871de9e4dcdcd781db23014164a14c779b05
 
 
 Private Sub FrmApi_DragDrop(Source As Control, X As Single, Y As Single)
@@ -395,3 +513,8 @@ End Sub
 Private Sub LblGS_Click()
 
 End Sub
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 71a01805a4f028ffd1952374504c537763eb0432
+>>>>>>> 7072871de9e4dcdcd781db23014164a14c779b05
