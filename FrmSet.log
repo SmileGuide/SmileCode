@@ -1,0 +1,8 @@
+行 71: 控件 CDFL 的类 MSComDlg.CommonDialog 不是一个已加载的控件类。
+行 74: 属性名 _ExtentX 在 CDFL 中是无效的。
+行 75: 属性名 _ExtentY 在 CDFL 中是无效的。
+行 76: 属性名 _Version 在 CDFL 中是无效的。
+行 77: 属性名 CancelError 在 CDFL 中是无效的。
+行 78: 属性名 DialogTitle 在 CDFL 中是无效的。
+行 79: 属性名 Filter 在 CDFL 中是无效的。
+行 81: 属性名 Min 在 CDFL 中是无效的。
