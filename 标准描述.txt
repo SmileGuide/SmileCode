@@ -1,0 +1,15 @@
+{
+Day1
+"14:20","geography";
+"2:30","maths";
+"12:50","physics";
+Day2
+"12:50","physics";
+day 3
+"14:20","geography";
+day4
+day5
+day6
+day7
+}
+
